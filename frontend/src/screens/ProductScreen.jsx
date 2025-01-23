@@ -1,14 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import {
-    Row,
-    Col,
-    Image,
-    ListGroup,
-    Card,
-    Button,
-    ListGroupItem,
-} from "react-bootstrap";
+import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
 import Rating from "../components/Rating";
 import products from "../products";
 
@@ -28,23 +20,23 @@ const ProductScreen = () => {
                 </Col>
                 <Col md={4}>
                     <ListGroup variant="flush">
-                        <ListGroupItem>
+                        <ListGroup.Item>
                             <h3>{product.name}</h3>
-                        </ListGroupItem>
-                        <ListGroupItem>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
                             <Rating
                                 value={product.rating}
                                 text={`${product.numReviews} reviews`}
                             />
-                        </ListGroupItem>
-                        <ListGroupItem>Price: ${product.price}</ListGroupItem>
-                        <ListGroupItem>{product.description}</ListGroupItem>
+                        </ListGroup.Item>
+                        <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+                        <ListGroup.Item>{product.description}</ListGroup.Item>
                     </ListGroup>
                 </Col>
                 <Col md={3}>
                     <Card>
                         <ListGroup variant="flush">
-                            <ListGroupItem>
+                            <ListGroup.Item>
                                 <Row>
                                     <Col>Price:</Col>
 
@@ -52,8 +44,8 @@ const ProductScreen = () => {
                                         <strong>${product.price}</strong>
                                     </Col>
                                 </Row>
-                            </ListGroupItem>
-                            <ListGroupItem>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
                                 <Row>
                                     <Col>Status:</Col>
 
@@ -65,8 +57,8 @@ const ProductScreen = () => {
                                         </strong>
                                     </Col>
                                 </Row>
-                            </ListGroupItem>
-                            <ListGroupItem>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
                                 <Button
                                     className="btn-block"
                                     type="button"
@@ -74,7 +66,7 @@ const ProductScreen = () => {
                                 >
                                     Add To Cart
                                 </Button>
-                            </ListGroupItem>
+                            </ListGroup.Item>
                         </ListGroup>
                     </Card>
                 </Col>
