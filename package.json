@@ -1,0 +1,26 @@
+{
+    "name": "ecom-demo",
+    "version": "1.0.0",
+    "description": "eCom with MERN",
+    "homepage": "https://github.com/PoChuanSu/BootCamp-ECOM#readme",
+    "bugs": {
+        "url": "https://github.com/PoChuanSu/BootCamp-ECOM/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/PoChuanSu/BootCamp-ECOM.git"
+    },
+    "license": "ISC",
+    "author": "",
+    "type": "module",
+    "main": "server.js",
+    "scripts": {
+        "server": "nodemon backend/server.js",
+        "client": "npm start --prefix frontend",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
+    },
+    "dependencies": {
+        "concurrently": "^9.1.2",
+        "express": "^4.21.2"
+    }
+}
