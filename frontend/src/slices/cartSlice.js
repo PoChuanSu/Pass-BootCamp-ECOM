@@ -12,7 +12,7 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addtoCart: (state, action) => {
+        addToCart: (state, action) => {
             const item = action.payload;
             const existItem = state.cartItems.find((x) => x._id === item._id);
 
@@ -48,6 +48,6 @@ const cartSlice = createSlice({
     },
 });
 
-export const { addtoCart } = cartSlice.actions;
+export const { addToCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
