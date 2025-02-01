@@ -29,6 +29,15 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
     return await brycpt.compare(enteredPassword, this.password);
 };
 
+userSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) {
+        next();
+    }
+
+    const salt = await brycpt.genSalt(12);
+    this.password = await brycpt.hash(this.password, salt);
+});
+
 const User = mongoose.model("User", userSchema);
 
 export default User;
