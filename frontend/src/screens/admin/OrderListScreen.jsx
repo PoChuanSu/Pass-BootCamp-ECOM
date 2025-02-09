@@ -32,7 +32,11 @@ const OrderListScreen = () => {
                             <tr key={order._id}>
                                 <td>{order._id}</td>
                                 <td>{order.user && order.user.name}</td>
-                                <td>{order.createdAt.substring(0, 0)}</td>
+                                <td>
+                                    {order.createdAt
+                                        ? order.createdAt.substring(0, 10)
+                                        : "N/A"}
+                                </td>
                                 <td>{order.totalPrice}</td>
                                 <td>
                                     {order.isPaid ? (
@@ -43,7 +47,7 @@ const OrderListScreen = () => {
                                 </td>
                                 <td>
                                     {order.isDelivered ? (
-                                        order.deliverAt.substring(0, 10)
+                                        order.deliveredAt.substring(0, 10)
                                     ) : (
                                         <FaTimes style={{ color: "red" }} />
                                     )}
