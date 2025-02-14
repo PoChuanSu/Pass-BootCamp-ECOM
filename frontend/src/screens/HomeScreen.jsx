@@ -1,5 +1,5 @@
 import { Row, Col } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Product from "../components/Product";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -15,6 +15,11 @@ const HomeScreen = () => {
 
     return (
         <>
+            {keyword && (
+                <Link className="btn btn-dark mb-4" to="/">
+                    Go Back
+                </Link>
+            )}
             {isLoading ? (
                 <Loader />
             ) : error ? (
