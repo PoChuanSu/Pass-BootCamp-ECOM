@@ -70,14 +70,25 @@ const OrderScreen = () => {
         });
     }
 
-    // async function onApproveTest() {
-    //     await payOrder({ orderId, details: { payer: {} } });
-    //     refetch();
-    //     toast.success("Payment successful");
-    // }
+    async function onApproveTest() {
+        console.log(orderId);
+        console.log(userInfo);
+        await payOrder({
+            orderId,
+            details: {
+                id: orderId,
+                status: "COMPLETED",
+                payer: { ...userInfo },
+            },
+        });
+        refetch();
+        // toast.success("Payment successful");
+    }
+
     function onError(err) {
         toast.error(err.message);
     }
+
     function createOrder(data, actions) {
         return actions.order
             .create({
@@ -214,13 +225,13 @@ const OrderScreen = () => {
                                         <Loader />
                                     ) : (
                                         <div>
-                                            {/* <Button
+                                            <Button
                                                 className="btn-dark"
                                                 onClick={onApproveTest}
                                                 style={{ marginBottom: "10px" }}
                                             >
-                                                Test Pay Order
-                                            </Button> */}
+                                                Pseudo Pay Order
+                                            </Button>
                                             <div>
                                                 <PayPalButtons
                                                     createOrder={createOrder}
