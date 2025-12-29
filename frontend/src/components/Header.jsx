@@ -1,6 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import { Badge, Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import { FaShoppingCart, FaUser } from "react-icons/fa";
+import {
+    Badge,
+    Navbar,
+    Nav,
+    Container,
+    NavDropdown,
+    Row,
+    Col,
+} from "react-bootstrap";
+import { FaShoppingCart, FaUser, FaRegHeart } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap"; // npm i react-router-bootstrap
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
@@ -33,77 +41,79 @@ const Header = () => {
 
     return (
         <header>
-            <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
+            <Navbar expand="md" className="py-5">
                 <Container>
-                    <LinkContainer to="/">
-                        <Navbar.Brand>
-                            <img src={logo} alt="su-pro-logo" />
-                            SuShop
-                        </Navbar.Brand>
-                    </LinkContainer>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="ms-auto">
-                            <SearchBox />
-                            <LinkContainer to="/cart">
-                                <Nav.Link>
-                                    <FaShoppingCart /> Cart
-                                    {cartItems.length > 0 && (
-                                        <Badge
-                                            pill
-                                            bg="success"
-                                            style={{ marginLeft: "5px" }}
-                                        >
-                                            {cartItems.reduce(
-                                                (a, c) => a + c.qty,
-                                                0
-                                            )}
-                                        </Badge>
-                                    )}
-                                </Nav.Link>
+                    <Row className="align-items-center w-100">
+                        <Col md={4}>
+                            <LinkContainer to="/">
+                                <Navbar.Brand className="fw-bold fs-3 d-flex align-items-center">
+                                    <img
+                                        src={logo}
+                                        alt="su-shop-logo"
+                                        height="48"
+                                        className="me-2"
+                                    />
+                                    SuShop
+                                </Navbar.Brand>
                             </LinkContainer>
-                            {userInfo ? (
-                                <NavDropdown
-                                    title={userInfo.name}
-                                    id="username"
-                                >
-                                    <LinkContainer to="/profile">
-                                        <NavDropdown.Item>
-                                            Profile
-                                        </NavDropdown.Item>
-                                    </LinkContainer>
-                                    <NavDropdown.Item onClick={logoutHandler}>
-                                        Logout
-                                    </NavDropdown.Item>
-                                </NavDropdown>
-                            ) : (
-                                <LinkContainer to="/login">
-                                    <Nav.Link>
-                                        <FaUser /> Sign In
+                        </Col>
+                        <Col md={4} className="justify-content-center">
+                            <SearchBox />
+                        </Col>
+                        <Col md={4} className="text-end">
+                            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                            <Navbar.Collapse id="basic-navbar-nav">
+                                <Nav className="ms-auto">
+                                    {userInfo ? (
+                                        <NavDropdown
+                                            title={userInfo.name}
+                                            id="username"
+                                        >
+                                            <LinkContainer to="/profile">
+                                                <NavDropdown.Item>
+                                                    Profile
+                                                </NavDropdown.Item>
+                                            </LinkContainer>
+                                            <NavDropdown.Item
+                                                onClick={logoutHandler}
+                                            >
+                                                Logout
+                                            </NavDropdown.Item>
+                                        </NavDropdown>
+                                    ) : (
+                                        <LinkContainer
+                                            className="px-4"
+                                            to="/login"
+                                        >
+                                            <Nav.Link>
+                                                <FaUser size={24} />
+                                            </Nav.Link>
+                                        </LinkContainer>
+                                    )}
+                                    <Nav.Link className="px-4">
+                                        <FaRegHeart size={24} />
                                     </Nav.Link>
-                                </LinkContainer>
-                            )}
-                            {userInfo && userInfo.isAdmin && (
-                                <NavDropdown title="Admin" id="adminmenu">
-                                    <LinkContainer to="/admin/productlist">
-                                        <NavDropdown.Item>
-                                            Products
-                                        </NavDropdown.Item>
+                                    <LinkContainer to="/cart">
+                                        <Nav.Link className="ps-4">
+                                            <FaShoppingCart size={24} />
+                                            {cartItems.length > 0 && (
+                                                <Badge
+                                                    pill
+                                                    bg="dark"
+                                                    className="position-absolute top-0 start-100 translate-middle"
+                                                >
+                                                    {cartItems.reduce(
+                                                        (a, c) => a + c.qty,
+                                                        0
+                                                    )}
+                                                </Badge>
+                                            )}
+                                        </Nav.Link>
                                     </LinkContainer>
-                                    <LinkContainer to="/admin/userlist">
-                                        <NavDropdown.Item>
-                                            Users
-                                        </NavDropdown.Item>
-                                    </LinkContainer>
-                                    <LinkContainer to="/admin/orderlist">
-                                        <NavDropdown.Item>
-                                            Orders
-                                        </NavDropdown.Item>
-                                    </LinkContainer>
-                                </NavDropdown>
-                            )}
-                        </Nav>
-                    </Navbar.Collapse>
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Col>
+                    </Row>
                 </Container>
             </Navbar>
         </header>
