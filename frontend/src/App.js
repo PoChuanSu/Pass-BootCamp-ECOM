@@ -4,11 +4,13 @@ import { ToastContainer } from "react-toastify"; // npm i react-toastify
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import MainMenu from "./components/MainMenu";
 
 const App = () => {
     return (
         <>
             <Header />
+            <MainMenu />
             <main className="py-3">
                 <Container>
                     <Outlet />

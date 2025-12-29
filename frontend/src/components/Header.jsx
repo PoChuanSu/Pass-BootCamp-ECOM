@@ -94,7 +94,7 @@ const Header = () => {
                                         <FaRegHeart size={24} />
                                     </Nav.Link>
                                     <LinkContainer to="/cart">
-                                        <Nav.Link className="ps-4">
+                                        <Nav.Link className="ps-4 position-relative">
                                             <FaShoppingCart size={24} />
                                             {cartItems.length > 0 && (
                                                 <Badge
