@@ -11,6 +11,7 @@ import { HelmetProvider } from "react-helmet-async"; // npm i react-helmet-async
 import { Provider } from "react-redux";
 import store from "./store";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./assets/styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";

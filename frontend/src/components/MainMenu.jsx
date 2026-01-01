@@ -1,14 +1,17 @@
-import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 const MainMenu = () => {
     return (
         <Navbar bg="dark" variant="dark" expand="md" className="py-2">
             <Container>
-                <Navbar.Toggle aria-controls="main-menu-nav" />
+                <Navbar.Toggle
+                    aria-controls="main-menu-nav"
+                    className="d-md-none"
+                />
 
                 <Navbar.Collapse id="main-menu-nav">
-                    <Nav className="me-auto">
+                    <Nav>
                         <LinkContainer className="pe-4" to="/">
                             <Nav.Link>Home</Nav.Link>
                         </LinkContainer>

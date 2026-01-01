@@ -99,3 +99,13 @@ table th {
 .search-btn:hover {
     background-color: #000;
 }
+
+.search-toggle::after {
+    display: none;
+}
+
+.search-dropdown {
+    position: static !important; /* ⬅️ key */
+    border: none;
+    box-shadow: none;
+}
