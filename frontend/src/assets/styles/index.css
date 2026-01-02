@@ -52,6 +52,11 @@ table th {
     background: rgba(0, 0, 0, 0.5);
 }
 
+.carousel-slide {
+    max-width: 1200px;
+    padding: 7rem;
+}
+
 .search-box {
     width: 100%;
 }
@@ -124,12 +129,23 @@ table th {
     transition: all 0.3s ease;
 }
 
+.count-box {
+    background: #fff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    min-width: 80px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.text-accent {
+    color: #e20561;
+}
+
 .social-btn svg {
     color: #ffffff;
     font-size: 18px;
 }
 
-/* hover + focus */
 .social-btn:hover,
 .social-btn:focus-visible {
     background: #ffffff;
@@ -143,14 +159,13 @@ table th {
 .footer-btn {
     background: none;
     border: none;
-    color: #adb5bd; /* Bootstrap text-secondary */
+    color: #adb5bd;
     padding: 4px 0;
     position: relative;
     cursor: pointer;
     font-size: 1rem;
 }
 
-/* underline */
 .footer-btn::after {
     content: "";
     position: absolute;
@@ -162,7 +177,6 @@ table th {
     transition: width 0.3s ease;
 }
 
-/* hover effect */
 .footer-btn:hover {
     color: #ffffff;
 }

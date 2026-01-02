@@ -3,6 +3,9 @@ import { Carousel, Image } from "react-bootstrap";
 import Loader from "./Loader";
 import Message from "./Message";
 import { useGetTopProductsQuery } from "../slices/productsApiSlice";
+import NewArrivalSlide from "./NewArrivalSlide";
+import PromotedSlide from "./PromotedSlide";
+import FeaturedProductSection from "./FeaturedProductSection";
 
 const ProductCarousel = () => {
     const { data: products, isLoading, error } = useGetTopProductsQuery();
@@ -12,19 +15,16 @@ const ProductCarousel = () => {
     ) : error ? (
         <Message variant="danger">{error}</Message>
     ) : (
-        <Carousel pause="hover" className="bg-primary mb-4">
-            {products.map((product) => (
-                <Carousel.Item key={product._id}>
-                    <Link to={`/product/${product._id}`}>
-                        <Image src={product.image} alt={product.name} fluid />
-                        <Carousel.Caption className="carousel-caption">
-                            <h2>
-                                {product.name} (${product.price})
-                            </h2>
-                        </Carousel.Caption>
-                    </Link>
-                </Carousel.Item>
-            ))}
+        <Carousel pause="hover" variant="dark">
+            <Carousel.Item>
+                <NewArrivalSlide products={products} />
+            </Carousel.Item>
+            <Carousel.Item>
+                <PromotedSlide products={products} />
+            </Carousel.Item>
+            <Carousel.Item>
+                <FeaturedProductSection products={products} />
+            </Carousel.Item>
         </Carousel>
     );
 };

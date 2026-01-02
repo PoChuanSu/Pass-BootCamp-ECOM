@@ -1,6 +1,6 @@
 const products = [
     {
-        name: "Airpods Wireless Bluetooth Headphones",
+        name: "Airpods 4",
         image: "/images/airpods.jpg",
         description:
             "Bluetooth technology lets you connect it with compatible devices wirelessly High-quality AAC audio offers immersive listening experience Built-in microphone allows you to take calls while working",
@@ -12,7 +12,7 @@ const products = [
         numReviews: 12,
     },
     {
-        name: "iPhone 11 Pro 256GB Memory",
+        name: "iPhone 17 Pro",
         image: "/images/phone.jpg",
         description:
             "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
@@ -36,7 +36,7 @@ const products = [
         numReviews: 12,
     },
     {
-        name: "Sony Playstation 4 Pro White Version",
+        name: "Sony Playstation 5",
         image: "/images/playstation.jpg",
         description:
             "The ultimate home entertainment center starts with PlayStation. Whether you are into gaming, HD movies, television, music",
@@ -48,7 +48,7 @@ const products = [
         numReviews: 12,
     },
     {
-        name: "Logitech G-Series Gaming Mouse",
+        name: "Logitech G305 Gaming Mouse",
         image: "/images/mouse.jpg",
         description:
             "Get a better handle on your games with this Logitech LIGHTSYNC gaming mouse. The six programmable buttons allow customization for a smooth playing experience",
