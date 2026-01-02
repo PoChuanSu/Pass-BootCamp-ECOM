@@ -6,8 +6,8 @@ function PromotedSlide({ products }) {
     const displayProducts = products.slice(0, 3);
 
     return (
-        <section className="py-5 mx-auto carousel-slide">
-            <Row className="align-items-stretch">
+        <section className="mx-auto carousel-slide">
+            <Row className="align-items-center">
                 <Col lg={4}>
                     <span
                         className="px-4 py-2 mb-3 rounded-pill fw-semibold"

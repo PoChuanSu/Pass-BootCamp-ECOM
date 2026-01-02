@@ -55,6 +55,7 @@ table th {
 .carousel-slide {
     max-width: 1200px;
     padding: 7rem;
+    height: 650px;
 }
 
 .search-box {
