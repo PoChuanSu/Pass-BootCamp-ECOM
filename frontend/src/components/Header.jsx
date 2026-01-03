@@ -43,36 +43,44 @@ const Header = () => {
 
     return (
         <header>
-            <Navbar expand={false} className="py-5">
+            <Navbar expand={false} className="py-3">
                 <Container>
                     <Row className="align-items-center w-100">
-                        <Col md={3} xs={4}>
+                        <Col
+                            xs={12}
+                            md={3}
+                            lg={3}
+                            className="d-flex justify-content-center justify-content-md-start"
+                        >
                             <LinkContainer to="/">
                                 <Navbar.Brand className="fw-bold fs-3 d-flex align-items-center">
                                     <img
                                         src={logo}
                                         alt="su-shop-logo"
-                                        height="48"
-                                        className="me-2"
+                                        height="100"
+                                        className="me-4"
                                     />
                                     SuShop
                                 </Navbar.Brand>
                             </LinkContainer>
                         </Col>
                         <Col
-                            md={6}
-                            className="justify-content-center d-none d-md-block"
+                            lg={7}
+                            className="justify-content-center align-items-center d-none d-lg-flex mx-auto"
                         >
-                            <SearchBox />
+                            <div style={{ maxWidth: "420px", width: "100%" }}>
+                                <SearchBox />
+                            </div>
                         </Col>
                         <Col
-                            md={3}
-                            xs={8}
-                            className="d-flex justify-content-end align-items-center"
+                            xs={12}
+                            md={9}
+                            lg={2}
+                            className="d-flex justify-content-center justify-content-md-end align-items-center"
                         >
                             <Nav className="flex-row align-items-center gap-4">
                                 <Nav.Link
-                                    className="d-md-none"
+                                    className="d-lg-none"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#mobileSearch"
                                     aria-controls="mobileSearch"
@@ -135,7 +143,7 @@ const Header = () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <div className="collapse d-md-none" id="mobileSearch">
+            <div className="collapse d-lg-none" id="mobileSearch">
                 <Container className="py-3">
                     <SearchBox />
                 </Container>
