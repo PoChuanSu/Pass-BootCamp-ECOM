@@ -46,13 +46,12 @@ function CategoryShowcase() {
                                         backgroundColor: "#fff",
                                     }}
                                 />
+                                <Card.Body>
+                                    <Card.Title className="fs-5 text-center fw-medium text-decoration-underline mb-0">
+                                        {item.title}
+                                    </Card.Title>
+                                </Card.Body>
                             </Card>
-
-                            <Card.Body>
-                                <Card.Title className="fs-5 text-center fw-medium text-decoration-underline mb-0">
-                                    {item.title}
-                                </Card.Title>
-                            </Card.Body>
                         </Link>
                     </Col>
                 ))}

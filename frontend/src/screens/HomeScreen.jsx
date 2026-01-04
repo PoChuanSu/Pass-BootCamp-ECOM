@@ -7,6 +7,7 @@ import Paginate from "../components/Paginate";
 import ProductCarousel from "../components/ProductCarousel";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import CategoryShowcase from "../components/CategoryShowcase";
+import FanFavourites from "../components/FanFavourites";
 
 const HomeScreen = () => {
     const { pageNumber, keyword } = useParams();
@@ -33,6 +34,7 @@ const HomeScreen = () => {
             ) : (
                 <>
                     <CategoryShowcase />
+                    <FanFavourites products={data.products} />
                     {/* <h1>Latest Products</h1>
                     <Row>
                         {data.products.map((product) => (
