@@ -10,10 +10,10 @@ function PromotedSlide({ products }) {
             <Row className="align-items-center">
                 <Col lg={4}>
                     <span
-                        className="px-4 py-2 mb-3 rounded-pill fw-semibold"
+                        className="px-4 py-2 mb-3 rounded-pill fw-semibold border border-dark"
                         style={{
-                            backgroundColor: "#e1096aff",
-                            color: "#dedddeff",
+                            backgroundColor: "#ffffffff",
+                            color: "#000000ff",
                         }}
                     >
                         Featured Collection
@@ -31,10 +31,10 @@ function PromotedSlide({ products }) {
                         <Button
                             size="lg"
                             style={{
-                                backgroundColor: "#e1096aff",
-                                color: "#dedddeff",
+                                backgroundColor: "#ffffffff",
+                                color: "#000000ff",
                             }}
-                            className="my-5 px-4 border-0"
+                            className="my-5 px-4 border border-dark"
                         >
                             Explore Collection →
                         </Button>

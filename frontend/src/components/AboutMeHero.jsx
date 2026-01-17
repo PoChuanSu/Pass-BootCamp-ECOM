@@ -1,5 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
-import aboutMeImg from "../assets/aboutme.jpg";
+import aboutMeImg from "../assets/logo.png";
 
 const AboutMeHero = () => {
     return (
@@ -27,15 +27,12 @@ const AboutMeHero = () => {
                         md={12}
                         className="d-flex justify-content-center justify-content-lg-end pe-lg-0"
                     >
-                        <div
-                            className="shadow-sm rounded overflow-hidden"
-                            style={{ maxWidth: "350px", width: "100%" }}
-                        >
+                        <div style={{ maxWidth: "400px", width: "100%" }}>
                             <img
                                 src={aboutMeImg}
                                 alt="About me img"
                                 className="img-fluid d-block mx-auto"
-                                style={{ height: "auto" }}
+                                style={{ height: "300px" }}
                             />
                         </div>
                     </Col>

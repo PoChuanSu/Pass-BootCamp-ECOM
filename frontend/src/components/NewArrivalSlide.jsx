@@ -9,10 +9,10 @@ function NewArrivalSlide({ products }) {
             <Row className="align-items-center">
                 <Col lg={5}>
                     <span
-                        className="px-4 py-2 mb-3 rounded-pill fw-semibold"
+                        className="px-4 py-2 mb-3 rounded-pill fw-semibold border border-dark"
                         style={{
-                            backgroundColor: "#e1096aff",
-                            color: "#dedddeff",
+                            backgroundColor: "#ffffffff",
+                            color: "#000000ff",
                         }}
                     >
                         New Arrivals
@@ -29,10 +29,10 @@ function NewArrivalSlide({ products }) {
                         <Button
                             size="lg"
                             style={{
-                                backgroundColor: "#e1096aff",
-                                color: "#dedddeff",
+                                backgroundColor: "#ffffffff",
+                                color: "#000000ff",
                             }}
-                            className="my-5 px-4 border-0"
+                            className="my-5 px-4 fw-semibold border border-dark"
                         >
                             Shop New Arrivals →
                         </Button>

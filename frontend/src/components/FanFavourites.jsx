@@ -1,4 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
@@ -21,14 +22,25 @@ function FanFavourites({ products }) {
             >
                 {products.map((product) => (
                     <SwiperSlide key={product._id}>
-                        <div className="text-center">
-                            <img
-                                src={product.image}
-                                alt={product.name}
-                                className="img-fluid mb-3"
-                                style={{ maxHeight: "200px" }}
-                            />
-                            <p className="fw-medium mb-1">{product.name}</p>
+                        <div className="text-center w-100 px-2">
+                            <div className="ratio ratio-1x1 mb-3">
+                                <Link to={`/product/${product._id}`}>
+                                    <img
+                                        src={product.image}
+                                        alt={product.name}
+                                        className="object-fit-contain p-2"
+                                        style={{ maxHeight: "200px" }}
+                                    />
+                                </Link>
+                            </div>
+                            <Link
+                                to={`/product/${product._id}`}
+                                className="text-decoration-none text-reset"
+                            >
+                                <p className="fw-medium mb-1 text-truncate">
+                                    {product.name}
+                                </p>
+                            </Link>
                             <p className="text-muted mb-0">${product.price}</p>
                         </div>
                     </SwiperSlide>
