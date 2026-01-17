@@ -15,12 +15,16 @@ const reviewSchema = mongoose.Schema(
             type: Number,
             required: true,
         },
+        title: {
+            type: String,
+            required: true,
+        },
         comment: {
             type: String,
             required: true,
         },
     },
-    { timestamps: true }
+    { timestamps: true },
 );
 
 const productSchema = new mongoose.Schema(
@@ -64,7 +68,7 @@ const productSchema = new mongoose.Schema(
         price: { type: Number, required: true, default: 0 },
         countInStock: { type: Number, required: true, default: 0 },
     },
-    { timestamps: true }
+    { timestamps: true },
 );
 
 const Product = mongoose.model("Product", productSchema);

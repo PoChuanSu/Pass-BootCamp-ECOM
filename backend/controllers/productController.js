@@ -96,13 +96,15 @@ const deleteProduct = asyncHandler(async (req, res) => {
 // @route POST /api/products/:id/reviews
 // @access Private
 const createProductReview = asyncHandler(async (req, res) => {
-    const { rating, comment } = req.body;
+    const { rating, title, comment } = req.body;
+
+    console.log(title);
 
     const product = await Product.findById(req.params.id);
 
     if (product) {
         const alreadyReviewed = product.reviews.find(
-            (review) => review.user.toString() === req.user._id.toString()
+            (review) => review.user.toString() === req.user._id.toString(),
         );
 
         if (alreadyReviewed) {
@@ -113,6 +115,7 @@ const createProductReview = asyncHandler(async (req, res) => {
         const review = {
             name: req.user.name,
             rating: Number(rating),
+            title,
             comment,
             user: req.user._id,
         };

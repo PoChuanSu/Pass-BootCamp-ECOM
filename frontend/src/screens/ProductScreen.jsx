@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { MdLocalOffer } from "react-icons/md";
+import { HiMinus, HiPlus } from "react-icons/hi";
+import { FaShoppingCart, FaRegHeart } from "react-icons/fa";
+import { LuTruck, LuRefreshCw, LuShieldCheck } from "react-icons/lu";
 import {
+    Tabs,
     Form,
+    Tab,
     Row,
     Col,
     Image,
     ListGroup,
-    Card,
     Button,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +26,7 @@ import {
     useCreateReviewMutation,
 } from "../slices/productsApiSlice";
 import { addToCart } from "../slices/cartSlice";
+import ClickRating from "../components/ClickRating";
 
 const ProductScreen = () => {
     const { id: productId } = useParams();
@@ -30,6 +36,7 @@ const ProductScreen = () => {
 
     const [qty, setQty] = useState(1);
     const [rating, setRating] = useState(0);
+    const [title, setTitle] = useState("");
     const [comment, setComment] = useState("");
 
     const {
@@ -56,6 +63,7 @@ const ProductScreen = () => {
             await createReview({
                 productId,
                 rating,
+                title,
                 comment,
             }).unwrap();
             refetch();
@@ -67,14 +75,15 @@ const ProductScreen = () => {
         }
     };
 
-    // console.log([...Array(product.countInStock).keys()]);
-
     return (
         <>
-            <Link className="btn btn-light my-3" to="/">
-                Go Back
-            </Link>
-
+            <nav className="mb-4 fs-5">
+                <Link to="/" className="text-decoration-none fw-bold text-dark">
+                    Home
+                </Link>
+                <span className="mx-2 text-muted">/</span>
+                <span className="text-dark">Product Details</span>
+            </nav>
             {isLoading ? (
                 <Loader />
             ) : error ? (
@@ -84,203 +93,576 @@ const ProductScreen = () => {
             ) : (
                 <>
                     <Meta title={product.name} />
-                    <Row>
-                        <Col md={5}>
-                            <Image
-                                src={product.image}
-                                alt={product.name}
-                                fluid
-                            />
+                    <Row className="product-details-container">
+                        <Col
+                            md={5}
+                            className="d-flex justify-content-center align-items-center"
+                        >
+                            <div className="main-image-wrapper w-100">
+                                <Image
+                                    src={product.image}
+                                    alt={product.name}
+                                    fluid
+                                    rounded
+                                    className="product-main-img"
+                                />
+                            </div>
                         </Col>
-                        <Col md={4}>
-                            <ListGroup variant="flush">
-                                <ListGroup.Item>
-                                    <h3>{product.name}</h3>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                    <Rating
-                                        value={product.rating}
-                                        text={`${product.numReviews} reviews`}
-                                    />
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                    Price: ${product.price}
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                    {product.description}
-                                </ListGroup.Item>
-                            </ListGroup>
-                        </Col>
-                        <Col md={3}>
-                            <Card>
-                                <ListGroup variant="flush">
-                                    <ListGroup.Item>
-                                        <Row>
-                                            <Col>Price:</Col>
 
-                                            <Col>
-                                                <strong>
-                                                    ${product.price}
-                                                </strong>
-                                            </Col>
-                                        </Row>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
-                                        <Row>
-                                            <Col>Status:</Col>
+                        <Col md={7} className="ps-lg-5">
+                            <div className="product-info-header mb-2">
+                                <span className="text-muted text-uppercase small ls-wide">
+                                    {product.category || "CATEGORY"}
+                                </span>
+                                <h1 className="display-6 fw-bold text-dark my-2">
+                                    {product.name}
+                                </h1>
 
-                                            <Col>
-                                                <strong>
-                                                    {product.countInStock > 0
-                                                        ? "In Stock"
-                                                        : "Out of Stock"}
-                                                </strong>
-                                            </Col>
-                                        </Row>
-                                    </ListGroup.Item>
-                                    {product.countInStock > 0 && (
-                                        <ListGroup.Item>
-                                            <Row>
-                                                <Col>Qty</Col>
-                                                <Col>
-                                                    <Form.Control
-                                                        as="select"
-                                                        value={qty}
-                                                        onChange={(e) =>
-                                                            setQty(
-                                                                Number(
-                                                                    e.target
-                                                                        .value
-                                                                )
-                                                            )
-                                                        }
-                                                    >
-                                                        {[
-                                                            ...Array(
-                                                                product.countInStock
-                                                            ).keys(),
-                                                        ].map((x) => (
-                                                            <option
-                                                                key={x + 1}
-                                                                value={x + 1}
-                                                            >
-                                                                {x + 1}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Control>
-                                                </Col>
-                                            </Row>
-                                        </ListGroup.Item>
-                                    )}
-                                    <ListGroup.Item>
-                                        <Button
-                                            className="btn-dark"
-                                            type="button"
-                                            disabled={
-                                                product.countInStock === 0
-                                            }
-                                            onClick={addToCartHandler}
-                                        >
-                                            Add To Cart
-                                        </Button>
-                                    </ListGroup.Item>
-                                </ListGroup>
-                            </Card>
-                        </Col>
-                    </Row>
-                    <Row className="review">
-                        <Col md={6}>
-                            <h2>Reviews</h2>
-                            {product.reviews.length === 0 && (
-                                <Message>No Reviews</Message>
-                            )}
-                            <ListGroup variant="flush">
-                                {product.reviews.map((review) => (
-                                    <ListGroup.Item key={review._id}>
-                                        <strong>{review.name}</strong>
-                                        <Rating value={review.rating} />
-                                        <p>
-                                            {review.createdAt.substring(0, 10)}
-                                        </p>
-                                        <p>{review.comment}</p>
-                                    </ListGroup.Item>
-                                ))}
-                                <ListGroup.Item>
-                                    <h2>Write a Customer Review</h2>
-                                    {loadingProductReview && <Loader />}
-                                    {userInfo ? (
-                                        <Form onSubmit={submitHandler}>
-                                            <Form.Group
-                                                controlId="rating"
-                                                className="my-2"
-                                            >
-                                                <Form.Label>Rating</Form.Label>
-                                                <Form.Control
-                                                    as="select"
-                                                    value={rating}
-                                                    onChange={(e) =>
-                                                        setRating(
-                                                            Number(
-                                                                e.target.value
-                                                            )
-                                                        )
-                                                    }
-                                                >
-                                                    <option value="">
-                                                        Select...
-                                                    </option>
-                                                    <option value="1">
-                                                        1 - Poor
-                                                    </option>
-                                                    <option value="2">
-                                                        2 - Fair
-                                                    </option>
-                                                    <option value="3">
-                                                        3 - Good
-                                                    </option>
-                                                    <option value="4">
-                                                        4 - Very Good
-                                                    </option>
-                                                    <option value="5">
-                                                        5 - Excellent
-                                                    </option>
-                                                </Form.Control>
-                                            </Form.Group>
-                                            <Form.Group
-                                                controlId="comment"
-                                                className="my-2"
-                                            >
-                                                <Form.Label>Comment</Form.Label>
-                                                <Form.Control
-                                                    as="textarea"
-                                                    row="3"
-                                                    value={comment}
-                                                    onChange={(e) =>
-                                                        setComment(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                ></Form.Control>
-                                            </Form.Group>
+                                <div className="d-flex align-items-center mb-4 fs-5">
+                                    <Rating value={product.rating} />
+                                    <span className="ms-1 me-3 fw-bold">
+                                        {product.rating}
+                                    </span>
+                                    <span className="ms-1 text-muted">
+                                        {product.numReviews} Reviews
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Pricing Section */}
+                            <div
+                                className="price-card p-4 rounded-4 mb-4"
+                                style={{ backgroundColor: "#fcfafb" }}
+                            >
+                                <div className="d-flex align-items-baseline mb-2">
+                                    <h2 className="fw-bold mb-0">
+                                        ${product.price}
+                                    </h2>
+                                    <span className="text-muted text-decoration-line-through ms-3">
+                                        $799.99
+                                    </span>
+                                </div>
+                                <div
+                                    className="d-flex align-items-center my-2"
+                                    style={{ color: "#c1272d" }}
+                                >
+                                    <MdLocalOffer size={20} className="me-2" />
+                                    <span
+                                        className="fw-bold"
+                                        style={{ fontSize: "1.1rem" }}
+                                    >
+                                        Promos & Rewards
+                                    </span>
+                                </div>
+                                <div className="stock-status small fw-bold">
+                                    <i
+                                        className={`fas fa-check-circle ${product.countInStock > 0 ? "text-success" : "text-danger"} me-1`}
+                                    ></i>
+                                    {product.countInStock > 0
+                                        ? `In Stock (${product.countInStock} items left)`
+                                        : "Out of Stock"}
+                                </div>
+                            </div>
+
+                            <p className="text-muted mb-4">
+                                {product.description}
+                            </p>
+
+                            <div className="qty-section mb-4">
+                                <h6 className="fw-bold mb-4">Quantity</h6>
+                                <div className="d-flex align-items-center gap-3">
+                                    <div className="mb-4">
+                                        <div className="quantity-group d-flex align-items-center border rounded-3">
                                             <Button
-                                                disabled={loadingProductReview}
-                                                type="submit"
-                                                variant="primary"
+                                                variant="light"
+                                                className="qty-btn border-0 bg-transparent"
+                                                onClick={() =>
+                                                    setQty(Math.max(1, qty - 1))
+                                                }
                                             >
-                                                Submit
+                                                <HiMinus size={20} />
                                             </Button>
-                                        </Form>
-                                    ) : (
-                                        <Message>
-                                            Please
-                                            <Link to="/login"> sign in </Link>to
-                                            write a review
-                                        </Message>
-                                    )}
-                                </ListGroup.Item>
-                            </ListGroup>
+
+                                            <div className="qty-number px-4 fw-bold border-start border-end">
+                                                {qty}
+                                            </div>
+
+                                            <Button
+                                                variant="light"
+                                                className="qty-btn border-0 bg-transparent"
+                                                onClick={() =>
+                                                    setQty(
+                                                        Math.min(
+                                                            product.countInStock,
+                                                            qty + 1,
+                                                        ),
+                                                    )
+                                                }
+                                            >
+                                                <HiPlus size={20} />
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="d-flex gap-2 mb-5">
+                                <Button
+                                    variant="dark"
+                                    className="btn-lg flex-grow-1 border-0"
+                                    disabled={product.countInStock === 0}
+                                    onClick={addToCartHandler}
+                                >
+                                    <FaShoppingCart
+                                        size={22}
+                                        className="me-2"
+                                    />
+                                    Add to Cart
+                                </Button>
+                                <Button
+                                    variant="outline-secondary"
+                                    className="btn-lg flex-grow-1"
+                                >
+                                    Buy Now
+                                </Button>
+                                <Button
+                                    variant="outline-dark"
+                                    className="btn-lg px-3"
+                                >
+                                    <FaRegHeart size={22} />
+                                </Button>
+                            </div>
+
+                            <Row className="pt-4 border-top mt-5 g-4">
+                                {" "}
+                                {/* g-4 adds vertical spacing when stacked */}
+                                {/* Free Shipping */}
+                                <Col
+                                    xs={12}
+                                    md={4}
+                                    className="d-flex align-items-center"
+                                >
+                                    <LuTruck
+                                        size={30}
+                                        className="me-3 flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h6 className="fw-bold mb-0">
+                                            Free Shipping
+                                        </h6>
+                                        <p className="text-muted mb-0 small">
+                                            On orders over $50
+                                        </p>
+                                    </div>
+                                </Col>
+                                {/* 30-Day Returns */}
+                                <Col
+                                    xs={12}
+                                    md={4}
+                                    className="d-flex align-items-center"
+                                >
+                                    <LuRefreshCw
+                                        size={28}
+                                        className="me-3 flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h6 className="fw-bold mb-0">
+                                            30-Day Returns
+                                        </h6>
+                                        <p className="text-muted mb-0 small">
+                                            Hassle-free returns
+                                        </p>
+                                    </div>
+                                </Col>
+                                {/* 2-Year Warranty */}
+                                <Col
+                                    xs={12}
+                                    md={4}
+                                    className="d-flex align-items-center"
+                                >
+                                    <LuShieldCheck
+                                        size={30}
+                                        className="me-3 flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h6 className="fw-bold mb-0">
+                                            2-Year Warranty
+                                        </h6>
+                                        <p className="text-muted mb-0 small">
+                                            Full coverage
+                                        </p>
+                                    </div>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
+                    <Row className="mt-5 pt-4">
+                        <Col md={12}>
+                            <Tabs
+                                defaultActiveKey="description"
+                                id="product-tabs"
+                                className="mb-4 custom-tabs"
+                                justify
+                            >
+                                <Tab
+                                    eventKey="description"
+                                    title={
+                                        <span className="fw-bold text-dark">
+                                            Description
+                                        </span>
+                                    }
+                                >
+                                    <div className="py-4">
+                                        <h4 className="fw-bold mb-3 text-dark">
+                                            Product Overview
+                                        </h4>
+                                        <p className="text-muted lh-lg">
+                                            {product.description} Lorem ipsum
+                                            dolor sit amet, consectetur
+                                            adipiscing elit. Vestibulum at lacus
+                                            congue, suscipit elit nec, tincidunt
+                                            orci. Phasellus egestas nisi vitae
+                                            lectus imperdiet venenatis.
+                                        </p>
+
+                                        <h5 className="fw-bold mt-4 mb-3 text-dark">
+                                            Key Features
+                                        </h5>
+                                        <ul className="text-muted lh-lg">
+                                            <li>
+                                                High-fidelity audio with noise
+                                                cancelling technology
+                                            </li>
+                                            <li>
+                                                Ergonomic design for
+                                                long-lasting comfort
+                                            </li>
+                                            <li>
+                                                Seamless wireless connectivity
+                                                with long battery life
+                                            </li>
+                                            <li>
+                                                Premium build quality with
+                                                durable materials
+                                            </li>
+                                        </ul>
+
+                                        <h5 className="fw-bold mt-4 mb-3 text-dark">
+                                            What's in the Box
+                                        </h5>
+                                        <ul className="text-muted lh-lg">
+                                            <li>{product.name}</li>
+                                            <li>Premium Carrying Case</li>
+                                            <li>USB-C Charging Cable</li>
+                                            <li>3.5mm Audio Cable</li>
+                                            <li>User Manual & Warranty Card</li>
+                                        </ul>
+                                    </div>
+                                </Tab>
+
+                                <Tab
+                                    eventKey="specs"
+                                    title={
+                                        <span className="fw-bold text-dark">
+                                            Specifications
+                                        </span>
+                                    }
+                                >
+                                    <div className="py-4">
+                                        <ListGroup variant="flush">
+                                            <ListGroup.Item className="d-flex justify-content-between">
+                                                <span className="fw-bold">
+                                                    Model
+                                                </span>
+                                                <span className="text-muted">
+                                                    Pro-Series v2
+                                                </span>
+                                            </ListGroup.Item>
+                                            <ListGroup.Item className="d-flex justify-content-between">
+                                                <span className="fw-bold">
+                                                    Battery Life
+                                                </span>
+                                                <span className="text-muted">
+                                                    Up to 40 Hours
+                                                </span>
+                                            </ListGroup.Item>
+                                            <ListGroup.Item className="d-flex justify-content-between">
+                                                <span className="fw-bold">
+                                                    Weight
+                                                </span>
+                                                <span className="text-muted">
+                                                    250g
+                                                </span>
+                                            </ListGroup.Item>
+                                            <ListGroup.Item className="d-flex justify-content-between">
+                                                <span className="fw-bold">
+                                                    Connectivity
+                                                </span>
+                                                <span className="text-muted">
+                                                    Bluetooth 5.2, 3.5mm Jack
+                                                </span>
+                                            </ListGroup.Item>
+                                        </ListGroup>
+                                    </div>
+                                </Tab>
+
+                                <Tab
+                                    eventKey="reviews"
+                                    title={
+                                        <span className="fw-bold text-dark">
+                                            Reviews ({product.numReviews})
+                                        </span>
+                                    }
+                                >
+                                    <div className="py-5">
+                                        {/* --- REVIEW SUMMARY SECTION --- */}
+                                        <Row className="mb-5 align-items-center">
+                                            <Col
+                                                md={3}
+                                                className="text-center border-end"
+                                            >
+                                                <h1 className="display-4 fw-bold mb-0">
+                                                    {product.rating}
+                                                </h1>
+                                                <div className="mb-2">
+                                                    <Rating
+                                                        value={product.rating}
+                                                        color="#ffc107"
+                                                    />
+                                                </div>
+                                                <p className="text-muted small">
+                                                    Based on{" "}
+                                                    {product.numReviews} reviews
+                                                </p>
+                                            </Col>
+
+                                            <Col md={6} className="px-md-5">
+                                                {[5, 4, 3, 2, 1].map((num) => {
+                                                    // 1. Calculate how many reviews have this specific star rating
+                                                    const starCount =
+                                                        product?.reviews?.filter(
+                                                            (r) =>
+                                                                r.rating ===
+                                                                num,
+                                                        ).length || 0;
+
+                                                    // 2. Calculate the percentage relative to the total number of reviews
+                                                    const totalReviews =
+                                                        product?.reviews
+                                                            ?.length || 0;
+                                                    const percentage =
+                                                        totalReviews > 0
+                                                            ? (starCount /
+                                                                  totalReviews) *
+                                                              100
+                                                            : 0;
+
+                                                    return (
+                                                        <div
+                                                            key={num}
+                                                            className="d-flex align-items-center mb-2"
+                                                        >
+                                                            <span
+                                                                className="me-3 small text-nowrap"
+                                                                style={{
+                                                                    width: "50px",
+                                                                }}
+                                                            >
+                                                                {num} stars
+                                                            </span>
+                                                            <div
+                                                                className="progress flex-grow-1"
+                                                                style={{
+                                                                    height: "8px",
+                                                                    backgroundColor:
+                                                                        "#eee",
+                                                                }}
+                                                            >
+                                                                <div
+                                                                    className="progress-bar"
+                                                                    role="progressbar"
+                                                                    style={{
+                                                                        width: `${percentage}%`,
+                                                                        backgroundColor:
+                                                                            "#fbab18",
+                                                                    }}
+                                                                ></div>
+                                                            </div>
+                                                            <span
+                                                                className="ms-3 small text-muted"
+                                                                style={{
+                                                                    width: "30px",
+                                                                }}
+                                                            >
+                                                                {starCount}
+                                                            </span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </Col>
+                                        </Row>
+
+                                        <hr className="my-5" />
+
+                                        {/* --- WRITE A REVIEW FORM --- */}
+                                        <div className="write-review-container p-4 rounded-4 shadow-sm bg-white border">
+                                            <h4 className="fw-bold mb-4 position-relative d-inline-block">
+                                                Write a Review
+                                            </h4>
+
+                                            {userInfo ? (
+                                                <Form onSubmit={submitHandler}>
+                                                    <Form.Group className="mb-4">
+                                                        <Form.Label className="fw-bold small text-muted text-uppercase">
+                                                            Your Rating
+                                                        </Form.Label>
+                                                        <div className="fs-3">
+                                                            <ClickRating
+                                                                value={rating}
+                                                                onClick={(
+                                                                    val,
+                                                                ) =>
+                                                                    setRating(
+                                                                        val,
+                                                                    )
+                                                                }
+                                                            />
+                                                        </div>
+                                                    </Form.Group>
+
+                                                    <Form.Group
+                                                        className="mb-4"
+                                                        controlId="reviewTitle"
+                                                    >
+                                                        <Form.Label className="fw-bold small text-muted text-uppercase">
+                                                            Review Title
+                                                        </Form.Label>
+                                                        <Form.Control
+                                                            type="text"
+                                                            value={title}
+                                                            onChange={(e) =>
+                                                                setTitle(
+                                                                    e.target
+                                                                        .value,
+                                                                )
+                                                            }
+                                                            placeholder="Summary of your experience"
+                                                            className="py-2 bg-light border-0"
+                                                        />
+                                                    </Form.Group>
+
+                                                    <Form.Group
+                                                        className="mb-4"
+                                                        controlId="comment"
+                                                    >
+                                                        <Form.Label className="fw-bold small text-muted text-uppercase">
+                                                            Your Review
+                                                        </Form.Label>
+                                                        <Form.Control
+                                                            as="textarea"
+                                                            rows={5}
+                                                            value={comment}
+                                                            onChange={(e) =>
+                                                                setComment(
+                                                                    e.target
+                                                                        .value,
+                                                                )
+                                                            }
+                                                            className="bg-light border-0"
+                                                        />
+                                                        <Form.Text className="text-muted small">
+                                                            Tell others what you
+                                                            think about this
+                                                            product. Be honest
+                                                            and helpful!
+                                                        </Form.Text>
+                                                    </Form.Group>
+
+                                                    <Button
+                                                        variant="dark"
+                                                        type="submit"
+                                                        className="w-100 py-3 fw-bold btn-hover-float"
+                                                        style={{
+                                                            border: "none",
+                                                        }}
+                                                    >
+                                                        Submit Review
+                                                    </Button>
+                                                </Form>
+                                            ) : (
+                                                <div className="p-4 bg-light rounded text-center">
+                                                    Please{" "}
+                                                    <Link
+                                                        to="/login"
+                                                        className="fw-bold text-primary"
+                                                    >
+                                                        sign in
+                                                    </Link>{" "}
+                                                    to write a review.
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </Tab>
+                            </Tabs>
+                        </Col>
+                    </Row>
+                    <div className="mt-5 pt-4">
+                        <h3 className="fw-bold mb-4">Customer Reviews</h3>
+
+                        {product?.reviews?.length === 0 ? (
+                            <div className="p-4 bg-light rounded text-center text-muted">
+                                No reviews yet. Be the first to share your
+                                experience!
+                            </div>
+                        ) : (
+                            <div className="review-list">
+                                {product.reviews.map((review) => (
+                                    <div
+                                        key={review._id}
+                                        className="p-4 mb-4 rounded-4 shadow-sm border bg-white"
+                                    >
+                                        <div className="d-flex justify-content-between align-items-start mb-3">
+                                            <div className="d-flex align-items-center">
+                                                {/* Placeholder Avatar */}
+                                                <div
+                                                    className="rounded-circle bg-light d-flex align-items-center justify-content-center me-3"
+                                                    style={{
+                                                        width: "50px",
+                                                        height: "50px",
+                                                    }}
+                                                >
+                                                    <span className="text-muted fw-bold">
+                                                        {review.name.charAt(0)}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <h6 className="fw-bold mb-0 text-dark">
+                                                        {review.name}
+                                                    </h6>
+                                                    <small className="text-muted">
+                                                        {new Date(
+                                                            review.createdAt,
+                                                        ).toLocaleDateString(
+                                                            "en-GB",
+                                                        )}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <Rating value={review.rating} />
+                                        </div>
+
+                                        <h5 className="fw-bold mb-2">
+                                            {review.title || "Review Title"}
+                                        </h5>
+                                        <p className="text-muted lh-base mb-0">
+                                            {review.comment}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </>
             )}
         </>

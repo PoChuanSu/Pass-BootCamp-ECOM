@@ -19,8 +19,6 @@ import { resetCart } from "../slices/cartSlice";
 import MainMenu from "./MainMenu";
 import MenuLinks from "./MenuLinks";
 
-// npm i react-router-dom@6.8.2 downgrade to solve issue
-
 const Header = () => {
     const { cartItems } = useSelector((state) => state.cart);
     const { userInfo } = useSelector((state) => state.auth);
@@ -125,7 +123,7 @@ const Header = () => {
                                             >
                                                 {cartItems.reduce(
                                                     (a, c) => a + c.qty,
-                                                    0
+                                                    0,
                                                 )}
                                             </Badge>
                                         )}
