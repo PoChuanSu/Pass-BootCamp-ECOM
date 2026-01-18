@@ -98,8 +98,6 @@ const deleteProduct = asyncHandler(async (req, res) => {
 const createProductReview = asyncHandler(async (req, res) => {
     const { rating, title, comment } = req.body;
 
-    console.log(title);
-
     const product = await Product.findById(req.params.id);
 
     if (product) {

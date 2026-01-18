@@ -28,6 +28,19 @@ table th {
     text-align: center;
 }
 
+/* Ensure the background of the progress bar track is transparent */
+.Toastify__progress-bar-theme--dark {
+    background: #ffffff !important;
+}
+
+.Toastify__toast-body {
+    /* Use 'serif' to match your "Register today" header */
+    font-family: "Times New Roman", Times, serif !important;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    padding: 10px 15px;
+}
+
 .review {
     margin-top: 30px;
 }
@@ -114,6 +127,43 @@ table th {
     position: static !important;
     border: none;
     box-shadow: none;
+}
+
+.dropdown-menu {
+    position: absolute !important;
+    margin-top: 10px !important;
+    /* Keeps the sharp minimalist look of SuShop */
+    border-radius: 0 !important;
+    border: 1px solid #eee !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+#username:focus,
+.dropdown-toggle:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+#username {
+    white-space: nowrap;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa !important;
+    color: #000 !important;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: #f8f9fa !important;
+    color: #000 !important;
+    font-weight: bold;
+}
+
+.nav-link:focus,
+#username:focus {
+    box-shadow: none !important;
+    outline: none !important;
 }
 
 .social-btn {

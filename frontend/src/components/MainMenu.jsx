@@ -28,8 +28,8 @@ const MainMenu = () => {
                             <Nav.Link>Cart</Nav.Link>
                         </LinkContainer>
 
-                        <LinkContainer className="px-4" to="/checkout">
-                            <Nav.Link>Checkout</Nav.Link>
+                        <LinkContainer className="px-4" to="/order">
+                            <Nav.Link>Order</Nav.Link>
                         </LinkContainer>
 
                         <LinkContainer className="px-4" to="/contact">

@@ -90,6 +90,7 @@ const Header = () => {
                                     <NavDropdown
                                         title={userInfo.name}
                                         id="username"
+                                        className="dropdown-menu-start"
                                     >
                                         <LinkContainer to="/profile">
                                             <NavDropdown.Item>

@@ -77,13 +77,11 @@ const Footer = () => {
                                 <button className="footer-btn">FAQs</button>
                             </li>
                             <li>
-                                <button className="footer-btn">
-                                    Order Status
-                                </button>
+                                <button className="footer-btn">Returns</button>
                             </li>
                             <li>
                                 <button className="footer-btn">
-                                    Returns & Exchanges
+                                    Order Status
                                 </button>
                             </li>
                         </ul>
@@ -119,15 +117,6 @@ const Footer = () => {
                                 </span>
                             </li>
                         </ul>
-
-                        <div className="d-flex gap-3 mt-3">
-                            <button className="btn btn-dark text-nowrap">
-                                 App Store
-                            </button>
-                            <button className="btn btn-dark text-nowrap">
-                                ▶ Google Play
-                            </button>
-                        </div>
                     </Col>
                 </Row>
 
