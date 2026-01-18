@@ -210,10 +210,6 @@ const OrderScreen = () => {
                                     <Col>${order.shippingPrice}</Col>
                                 </Row>
                                 <Row>
-                                    <Col>Tax</Col>
-                                    <Col>${order.taxPrice}</Col>
-                                </Row>
-                                <Row>
                                     <Col>Total</Col>
                                     <Col>${order.totalPrice}</Col>
                                 </Row>

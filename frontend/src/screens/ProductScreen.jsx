@@ -633,7 +633,14 @@ const ProductScreen = () => {
                                                     }}
                                                 >
                                                     <span className="text-muted fw-bold">
-                                                        {review.name.charAt(0)}
+                                                        {review.name
+                                                            .split(" ")
+                                                            .map((word) =>
+                                                                word.charAt(0),
+                                                            )
+                                                            .join("")
+                                                            .toUpperCase()
+                                                            .substring(0, 2)}
                                                     </span>
                                                 </div>
                                                 <div>

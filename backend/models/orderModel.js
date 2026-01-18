@@ -47,12 +47,6 @@ const orderSchema = mongoose.Schema(
             default: 0.0,
         },
 
-        taxPrice: {
-            type: Number,
-            required: true,
-            default: 0.0,
-        },
-
         shippingPrice: {
             type: Number,
             required: true,
@@ -84,7 +78,7 @@ const orderSchema = mongoose.Schema(
             type: Date,
         },
     },
-    { timestamps: true }
+    { timestamps: true },
 );
 
 const Order = mongoose.model("Order", orderSchema);

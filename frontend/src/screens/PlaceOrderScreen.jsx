@@ -32,7 +32,6 @@ const PlaceOrderScreen = () => {
                 paymentMethod: cart.paymentMethod,
                 itemsPrice: cart.itemsPrice,
                 shippingPrice: cart.shiipingPrice,
-                taxPrice: cart.taxPrice,
                 totalPrice: cart.totalPrice,
             }).unwrap();
             dispatch(clearCartItems());
@@ -115,12 +114,6 @@ const PlaceOrderScreen = () => {
                                 <Row>
                                     <Col>Shipping:</Col>
                                     <Col>${cart.shippingPrice}</Col>
-                                </Row>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col>Tax:</Col>
-                                    <Col>${cart.taxPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>

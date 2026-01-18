@@ -23,7 +23,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
         // map over the order items and use the price from our items from database
         const dbOrderItems = orderItems.map((itemFromClient) => {
             const matchingItemFromDB = itemsFromDB.find(
-                (itemFromDB) => itemFromDB._id.toString() === itemFromClient._id
+                (itemFromDB) =>
+                    itemFromDB._id.toString() === itemFromClient._id,
             );
             return {
                 ...itemFromClient,
@@ -34,7 +35,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
         });
 
         // calculate prices
-        const { itemsPrice, taxPrice, shippingPrice, totalPrice } =
+        const { itemsPrice, shippingPrice, totalPrice } =
             calcPrices(dbOrderItems);
 
         const order = new Order({
@@ -43,7 +44,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
             shippingAddress,
             paymentMethod,
             itemsPrice,
-            taxPrice,
             shippingPrice,
             totalPrice,
         });
@@ -68,7 +68,7 @@ const getMyOrders = asyncHandler(async (req, res) => {
 const getOrderById = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id).populate(
         "user",
-        "name email"
+        "name email",
     );
     if (order) {
         res.status(200).json(order);
