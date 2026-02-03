@@ -9,8 +9,17 @@ const MenuLinks = ({ vertical }) => (
         <LinkContainer to="/about">
             <Nav.Link>About</Nav.Link>
         </LinkContainer>
-        <LinkContainer to="/category">
-            <Nav.Link>Category</Nav.Link>
+        <LinkContainer to="/new">
+            <Nav.Link>New In</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/office">
+            <Nav.Link>Office</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/gaming">
+            <Nav.Link>Gaming</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/sale">
+            <Nav.Link>Sale</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/cart">
             <Nav.Link>Cart</Nav.Link>

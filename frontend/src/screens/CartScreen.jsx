@@ -9,11 +9,12 @@ import {
     Card,
     Form,
 } from "react-bootstrap";
-import { FaTrash, FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { FaShop } from "react-icons/fa6";
 import Message from "../components/Message";
 import { addToCart, removeFromCart } from "../slices/cartSlice";
+import CheckoutSteps from "../components/CheckoutSteps";
 
 const CartScreen = () => {
     const navigate = useNavigate();
@@ -32,6 +33,7 @@ const CartScreen = () => {
 
     return (
         <>
+            <CheckoutSteps step1 />
             <Row className="align-items-center mb-5 mt-2">
                 <Col className="d-flex justify-content-between align-items-center">
                     <h1 className="fw-bold mb-0" style={{ fontSize: "2.5rem" }}>
@@ -255,19 +257,18 @@ const CartScreen = () => {
                             variant="dark"
                             className="w-100 py-3 mt-4 rounded-3 d-flex align-items-center justify-content-center fw-bold"
                             onClick={() =>
-                                navigate("/login?redirect=/shipping")
+                                navigate("/login?redirect=/delivery")
                             }
                         >
-                            Proceed to Checkout{" "}
-                            <FaArrowRight className="ms-2" />
+                            Sign in and Checkout{" "}
                         </Button>
 
                         <Button
                             variant="light"
-                            className="w-100 mt-3 text-dark text-decoration-none small"
+                            className="w-100 mt-3 text-dark text-decoration-none small fw-bold"
                             onClick={() => navigate("/")}
                         >
-                            <FaArrowLeft className="me-2" /> Continue Shopping
+                            Checkout as Guest
                         </Button>
                     </Card>
                 </Col>

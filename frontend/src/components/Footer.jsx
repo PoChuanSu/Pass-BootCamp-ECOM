@@ -9,9 +9,11 @@ import {
     FaEnvelope,
     FaClock,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
+    const navigate = useNavigate();
 
     return (
         <footer className="bg-black text-light pt-5">
@@ -52,20 +54,49 @@ const Footer = () => {
                     </Col>
 
                     <Col lg={2} md={2}>
-                        <h5 className="fw-semibold pb-2">Shopping</h5>
+                        <h5 className="fw-semibold pb-2">Membership</h5>
                         <ul className="list-unstyled mt-3 text-secondary">
                             <li>
-                                <button className="footer-btn">
-                                    New Arrivals
+                                <button
+                                    className="footer-btn"
+                                    onClick={() => {
+                                        navigate("/profile");
+                                        window.scrollTo({
+                                            top: 0,
+                                            behavior: "smooth",
+                                        });
+                                    }}
+                                >
+                                    Profile
                                 </button>
                             </li>
                             <li>
-                                <button className="footer-btn">
-                                    Bestsellers
+                                <button
+                                    className="footer-btn"
+                                    onClick={() => {
+                                        navigate("/cart");
+                                        window.scrollTo({
+                                            top: 0,
+                                            behavior: "smooth",
+                                        });
+                                    }}
+                                >
+                                    Cart
                                 </button>
                             </li>
                             <li>
-                                <button className="footer-btn">Sale</button>
+                                <button
+                                    className="footer-btn"
+                                    onClick={() => {
+                                        navigate("/order");
+                                        window.scrollTo({
+                                            top: 0,
+                                            behavior: "smooth",
+                                        });
+                                    }}
+                                >
+                                    Order
+                                </button>
                             </li>
                         </ul>
                     </Col>
@@ -80,8 +111,17 @@ const Footer = () => {
                                 <button className="footer-btn">Returns</button>
                             </li>
                             <li>
-                                <button className="footer-btn">
-                                    Order Status
+                                <button
+                                    className="footer-btn"
+                                    onClick={() => {
+                                        navigate("/contact");
+                                        window.scrollTo({
+                                            top: 0,
+                                            behavior: "smooth",
+                                        });
+                                    }}
+                                >
+                                    Contact Us
                                 </button>
                             </li>
                         </ul>

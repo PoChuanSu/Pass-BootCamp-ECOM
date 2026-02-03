@@ -28,7 +28,7 @@ function PromotedSlide({ products }) {
                     </p>
                     <div className="mt-5">
                         <span className="fw-bold">Offer ends in:</span>
-                        <CountdownTimer endDate="2026-02-01T23:59:59" />
+                        <CountdownTimer endDate="2026-03-01T23:59:59" />
                     </div>
                     <div className="d-flex justify-content-center justify-content-lg-start">
                         <Button

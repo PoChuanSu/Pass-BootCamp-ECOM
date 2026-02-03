@@ -32,6 +32,14 @@ import ProductListScreen from "./screens/admin/ProductListScreen";
 import ProductEditScreen from "./screens/admin/productEditScreen";
 import UserListScreen from "./screens/admin/UserListScreen";
 import UserEditScreen from "./screens/admin/UserEditScreen";
+import DeliveryCollectScreen from "./screens/DeliveryCollectScreen";
+import MyOrderScreen from "./screens/MyOrder";
+import AboutMeScreen from "./screens/AboutMeScreen";
+import ContactScreen from "./screens/ContactScreen";
+import NewScreen from "./screens/NewScreen";
+import SaleScreen from "./screens/SaleScreen";
+import OfficeScreen from "./screens/OfficeScreen";
+import GamingScreen from "./screens/GamingScreen";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -47,10 +55,18 @@ const router = createBrowserRouter(
             <Route path="/cart" element={<CartScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
+            <Route path="/about" element={<AboutMeScreen />} />
+            <Route path="/new" element={<NewScreen />} />
+            <Route path="/office" element={<OfficeScreen />} />
+            <Route path="/gaming" element={<GamingScreen />} />
+            <Route path="/sale" element={<SaleScreen />} />
+            <Route path="/contact" element={<ContactScreen />} />
 
             <Route path="" element={<PrivateRoute />}>
-                <Route path="/shipping" element={<ShippingScreen />} />
+                <Route path="/delivery" element={<DeliveryCollectScreen />} />
+                <Route path="/address" element={<ShippingScreen />} />
                 <Route path="/payment" element={<PaymentScreen />} />
+                <Route path="/order" element={<MyOrderScreen />} />
                 <Route path="/placeorder" element={<PlaceOrderScreen />} />
                 <Route path="/order/:id" element={<OrderScreen />} />
                 <Route path="/profile" element={<ProfileScreen />} />
@@ -75,8 +91,8 @@ const router = createBrowserRouter(
                     element={<UserEditScreen />}
                 />
             </Route>
-        </Route>
-    )
+        </Route>,
+    ),
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -89,7 +105,7 @@ root.render(
                 </PayPalScriptProvider>
             </Provider>
         </HelmetProvider>
-    </React.StrictMode>
+    </React.StrictMode>,
 );
 
 reportWebVitals();

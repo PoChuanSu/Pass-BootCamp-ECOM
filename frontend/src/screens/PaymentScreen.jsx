@@ -1,57 +1,221 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Col } from "react-bootstrap";
-import FormContainer from "../components/FormContainer";
+import { Row, Col, Form, Button, Card, Accordion } from "react-bootstrap";
 import CheckoutSteps from "../components/CheckoutSteps";
-import { savePaymentMethod } from "../slices/cartSlice";
+import { useCreateOrderMutation } from "../slices/ordersApiSlice";
+import { clearCartItems } from "../slices/cartSlice";
+import { toast } from "react-toastify";
 
 const PaymentScreen = () => {
-    const [paymentMethod, setPaymentMethod] = useState("PayPal");
+    const [paymentMethod, setPaymentMethod] = useState("Pay After Arrival");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
     const cart = useSelector((state) => state.cart);
-    const { shippingAddress } = cart;
+    const { shippingAddress, cartItems } = cart;
+
+    const subtotal = cartItems
+        .reduce((acc, item) => acc + item.qty * item.price, 0)
+        .toFixed(2);
 
     useEffect(() => {
-        if (!shippingAddress) {
+        if (!shippingAddress?.address) {
             navigate("/shipping");
         }
     }, [shippingAddress, navigate]);
 
-    const submitHandler = (e) => {
+    const placeOrderHandler = async (e) => {
         e.preventDefault();
-        dispatch(savePaymentMethod(paymentMethod));
-        navigate("/placeorder");
+
+        try {
+            const res = await createOrder({
+                orderItems: cart.cartItems,
+                shippingAddress: cart.shippingAddress,
+                paymentMethod: paymentMethod,
+                itemsPrice: cart.itemsPrice,
+                mobile: cart.shippingAddress.mobile,
+                shippingPrice: cart.shippingPrice,
+                totalPrice: cart.totalPrice,
+            }).unwrap();
+
+            dispatch(clearCartItems());
+            navigate(`/order/${res._id}`);
+        } catch (err) {
+            toast.error(err?.data?.message || err.error || "An error occurred");
+        }
     };
 
     return (
-        <FormContainer>
-            <CheckoutSteps step1 step2 step3 />
-            <h1>Payment Method</h1>
-            <Form onSubmit={submitHandler}>
-                <Form.Group>
-                    <Form.Label as="legend">Select Method</Form.Label>
-                    <Col>
-                        <Form.Check
-                            type="radio"
-                            className="my-2"
-                            label="PayPal or Credit Card"
-                            id="PayPal"
-                            name="paymentMethod"
-                            value="PayPal"
-                            checked
-                            onChange={(e) => setPaymentMethod(e.target.value)}
-                        ></Form.Check>
+        <div className="container pb-5 mt-4">
+            {/* Step 4: Payment */}
+            <CheckoutSteps step1 step2 step3 step4 />
+
+            <Form onSubmit={placeOrderHandler}>
+                <Row className="mt-5">
+                    {/* LEFT COLUMN: Payment Method Accordions */}
+                    <Col lg={4} md={6}>
+                        <h2 className="fw-bold mb-4">Payment Method</h2>
+                        <Accordion defaultActiveKey="1" className="rounded-0">
+                            {/* Rewards Section */}
+                            <Accordion.Item
+                                eventKey="0"
+                                className="border-bottom"
+                            >
+                                <Accordion.Header className="fw-bold">
+                                    Gift Card
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                    <Form.Group
+                                        controlId="giftCardNumber"
+                                        className="mb-3"
+                                    >
+                                        <Form.Label className="small fw-bold text-muted text-uppercase">
+                                            Gift Card Number
+                                        </Form.Label>
+                                        <div className="d-flex">
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Enter 10-digit number"
+                                                className="rounded-0 border-dark py-2"
+                                                // Add state/onChange here
+                                            />
+                                            <Button
+                                                variant="dark"
+                                                className="ms-2 rounded-0 px-4 fw-bold"
+                                                style={{ minWidth: "100px" }}
+                                            >
+                                                Apply
+                                            </Button>
+                                        </div>
+                                    </Form.Group>
+                                </Accordion.Body>
+                            </Accordion.Item>
+
+                            {/* Credit / Debit Section */}
+                            <Accordion.Item eventKey="1">
+                                <Accordion.Header className="fw-bold">
+                                    Credit / Debit
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                    <Form.Check
+                                        type="radio"
+                                        label="Debit or Credit Card"
+                                        name="paymentMethod"
+                                        id="CreditCard"
+                                        value="Credit Card"
+                                        checked={
+                                            paymentMethod === "Credit Card"
+                                        }
+                                        onChange={(e) =>
+                                            setPaymentMethod(e.target.value)
+                                        }
+                                        className="fw-bold mb-3"
+                                    />
+                                </Accordion.Body>
+                            </Accordion.Item>
+                            <Accordion.Item eventKey="2">
+                                <Accordion.Header className="fw-bold">
+                                    Pay After Arrival
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                    <Form.Check
+                                        type="radio"
+                                        label="Pay After Arrival"
+                                        name="paymentMethod"
+                                        id="PayAfter"
+                                        value="Pay After Arrival"
+                                        checked={
+                                            paymentMethod ===
+                                            "Pay After Arrival"
+                                        }
+                                        onChange={(e) =>
+                                            setPaymentMethod(e.target.value)
+                                        }
+                                        className="fw-bold mb-3"
+                                    />
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
                     </Col>
-                </Form.Group>
-                <Button type="submit" vairant="primary" className="btn-dark">
-                    Continue
-                </Button>
+
+                    {/* MIDDLE COLUMN: Review Address */}
+                    <Col lg={4} md={6}>
+                        <h2 className="fw-bold mb-4">Review Address</h2>
+                        <Card className="rounded-0 border p-3">
+                            <div className="d-flex justify-content-between align-items-start mb-3">
+                                <h6 className="fw-bold mb-0">
+                                    Delivery & Billing Address
+                                </h6>
+                                <Button
+                                    variant="link"
+                                    className="p-0 text-dark small fw-bold text-decoration-underline"
+                                    onClick={() => navigate("/address")}
+                                >
+                                    Edit
+                                </Button>
+                            </div>
+                            <div className="small">
+                                <p className="mb-0 fw-bold">
+                                    {shippingAddress.firstName}{" "}
+                                    {shippingAddress.lastName}
+                                </p>
+                                <p className="mb-0">{shippingAddress.email}</p>
+                                <p className="mb-0">{shippingAddress.mobile}</p>
+                                <p className="mb-0">
+                                    {shippingAddress.address},{" "}
+                                    {shippingAddress.state},{" "}
+                                    {shippingAddress.postalCode}
+                                </p>
+                            </div>
+                        </Card>
+                    </Col>
+
+                    {/* RIGHT COLUMN: Order Summary */}
+                    <Col lg={4}>
+                        <div className="ps-lg-4">
+                            <h2 className="fw-bold mb-4">Order Summary</h2>
+                            <div className="d-flex justify-content-between mb-3 mt-4">
+                                <span className="fs-5 text-muted">
+                                    Subtotal
+                                </span>
+                                <span className="fw-bold fs-5">
+                                    ${subtotal}
+                                </span>
+                            </div>
+                            <div className="d-flex justify-content-between mb-2">
+                                <span className="fs-5 text-muted">
+                                    Total Shipping
+                                </span>
+                                <span className="fw-bold fs-5">
+                                    ${cart.shippingPrice}
+                                </span>
+                            </div>
+                            <hr className="my-4" />
+                            <div className="d-flex justify-content-between align-items-end mb-4">
+                                <div>
+                                    <h2 className="fw-bold mb-0">Total</h2>
+                                    <small className="text-muted fw-bold">
+                                        Including GST
+                                    </small>
+                                </div>
+                                <h2 className="fw-bold mb-0">${subtotal}</h2>
+                            </div>
+
+                            <Button
+                                type="submit"
+                                variant="dark"
+                                className="w-100 py-3 rounded-2 fw-bold fs-5 shadow-none"
+                            >
+                                Place Order
+                            </Button>
+                        </div>
+                    </Col>
+                </Row>
             </Form>
-        </FormContainer>
+        </div>
     );
 };
 

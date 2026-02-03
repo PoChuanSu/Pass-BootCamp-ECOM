@@ -6,7 +6,7 @@ import FormContainer from "../components/FormContainer";
 import Loader from "../components/Loader";
 import { useRegisterMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
-import { toast, cssTransition } from "react-toastify";
+import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash, FaCheckCircle, FaInfoCircle } from "react-icons/fa";
 
 const RegisterScreen = () => {

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const CountdownTimer = ({ endDate }) => {
-    const calculateTimeLeft = () => {
+    const calculateTimeLeft = useCallback(() => {
         const difference = new Date(endDate) - new Date();
 
         if (difference <= 0) {
@@ -19,7 +19,7 @@ const CountdownTimer = ({ endDate }) => {
             minutes: Math.floor((difference / 1000 / 60) % 60),
             seconds: Math.floor((difference / 1000) % 60),
         };
-    };
+    }, [endDate]);
 
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
@@ -29,7 +29,7 @@ const CountdownTimer = ({ endDate }) => {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [endDate]);
+    }, [calculateTimeLeft]);
 
     return (
         <div className="d-flex gap-3 mt-2">

@@ -18,7 +18,7 @@ const PlaceOrderScreen = () => {
 
     useEffect(() => {
         if (!cart.shippingAddress.address) {
-            navigate("/shipping");
+            navigate("/address");
         } else if (!cart.paymentMethod) {
             navigate("/payment");
         }
@@ -54,6 +54,7 @@ const PlaceOrderScreen = () => {
                                 {cart.shippingAddress.address},
                                 {cart.shippingAddress.city},{" "}
                                 {cart.shippingAddress.postalCode},{" "}
+                                {cart.shippingAddress.state},{" "}
                                 {cart.shippingAddress.country}
                             </p>
                         </ListGroup.Item>

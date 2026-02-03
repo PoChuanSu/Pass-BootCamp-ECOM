@@ -138,6 +138,7 @@ const OrderScreen = () => {
                                 {order.shippingAddress.address},{" "}
                                 {order.shippingAddress.city},{" "}
                                 {order.shippingAddress.postalCode},{" "}
+                                {order.shippingAddress.state},{" "}
                                 {order.shippingAddress.country}
                             </p>
                             {order.isDelivered ? (

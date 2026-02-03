@@ -5,12 +5,12 @@ const categories = [
     {
         title: "Office",
         image: "/images/office.jpg",
-        link: "/category/amuseables",
+        link: "/office",
     },
     {
         title: "Gaming",
         image: "/images/gaming.jpg",
-        link: "/best-sellers",
+        link: "/gaming",
     },
     {
         title: "Explore All",
