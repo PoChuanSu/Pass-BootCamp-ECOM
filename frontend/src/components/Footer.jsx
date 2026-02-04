@@ -61,10 +61,6 @@ const Footer = () => {
                                     className="footer-btn"
                                     onClick={() => {
                                         navigate("/profile");
-                                        window.scrollTo({
-                                            top: 0,
-                                            behavior: "smooth",
-                                        });
                                     }}
                                 >
                                     Profile
@@ -75,10 +71,6 @@ const Footer = () => {
                                     className="footer-btn"
                                     onClick={() => {
                                         navigate("/cart");
-                                        window.scrollTo({
-                                            top: 0,
-                                            behavior: "smooth",
-                                        });
                                     }}
                                 >
                                     Cart
@@ -89,10 +81,6 @@ const Footer = () => {
                                     className="footer-btn"
                                     onClick={() => {
                                         navigate("/order");
-                                        window.scrollTo({
-                                            top: 0,
-                                            behavior: "smooth",
-                                        });
                                     }}
                                 >
                                     Order
@@ -115,10 +103,6 @@ const Footer = () => {
                                     className="footer-btn"
                                     onClick={() => {
                                         navigate("/contact");
-                                        window.scrollTo({
-                                            top: 0,
-                                            behavior: "smooth",
-                                        });
                                     }}
                                 >
                                     Contact Us

@@ -52,7 +52,6 @@ const OfficeScreen = () => {
     return (
         <section className="py-5 bg-white">
             <Container>
-                {/* Header Banner */}
                 <div className="bg-light p-5 mb-5 rounded-0 border text-center">
                     <h1 className="display-4 fw-bold">Workspace Engineering</h1>
                     <p
@@ -65,7 +64,6 @@ const OfficeScreen = () => {
                     </p>
                 </div>
 
-                {/* Product Grid */}
                 <Row>
                     {officeProducts.map((product) => (
                         <Col

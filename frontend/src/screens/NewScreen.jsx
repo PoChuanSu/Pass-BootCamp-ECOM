@@ -1,5 +1,4 @@
 import { Container, Row, Col, Card, Badge, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
 const NewScreen = () => {
     // Mock Data for New Arrivals

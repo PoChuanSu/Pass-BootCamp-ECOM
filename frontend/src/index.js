@@ -14,7 +14,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./assets/styles/index.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminRoute from "./components/AdminRoute";
 import HomeScreen from "./screens/HomeScreen";
@@ -107,5 +106,3 @@ root.render(
         </HelmetProvider>
     </React.StrictMode>,
 );
-
-reportWebVitals();

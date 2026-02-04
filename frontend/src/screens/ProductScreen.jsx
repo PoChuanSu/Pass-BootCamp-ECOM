@@ -14,6 +14,7 @@ import {
     Image,
     ListGroup,
     Button,
+    Container,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -68,6 +69,7 @@ const ProductScreen = () => {
             }).unwrap();
             refetch();
             toast.success("Review Submitted");
+            setTitle("");
             setRating(0);
             setComment("");
         } catch (err) {
@@ -76,7 +78,7 @@ const ProductScreen = () => {
     };
 
     return (
-        <>
+        <Container>
             <nav className="mb-4 fs-5">
                 <Link to="/" className="text-decoration-none fw-bold text-dark">
                     Home
@@ -95,10 +97,13 @@ const ProductScreen = () => {
                     <Meta title={product.name} />
                     <Row className="product-details-container">
                         <Col
-                            md={5}
+                            lg={6}
                             className="d-flex justify-content-center align-items-center"
                         >
-                            <div className="main-image-wrapper w-100">
+                            <div
+                                className="main-image-wrapper w-100"
+                                style={{ maxWidth: "450px" }}
+                            >
                                 <Image
                                     src={product.image}
                                     alt={product.name}
@@ -109,9 +114,9 @@ const ProductScreen = () => {
                             </div>
                         </Col>
 
-                        <Col md={7} className="ps-lg-5">
+                        <Col lg={6} className="ps-lg-5">
                             <div className="product-info-header mb-2">
-                                <span className="text-muted text-uppercase small ls-wide">
+                                <span className="text-muted text-uppercase small ls-wide pt-4 py-md-0 d-block d-md-inline">
                                     {product.category || "CATEGORY"}
                                 </span>
                                 <h1 className="display-6 fw-bold text-dark my-2">
@@ -129,7 +134,6 @@ const ProductScreen = () => {
                                 </div>
                             </div>
 
-                            {/* Pricing Section */}
                             <div
                                 className="price-card p-4 rounded-4 mb-4"
                                 style={{ backgroundColor: "#fcfafb" }}
@@ -274,7 +278,6 @@ const ProductScreen = () => {
                                         </p>
                                     </div>
                                 </Col>
-                                {/* 2-Year Warranty */}
                                 <Col
                                     xs={12}
                                     md={4}
@@ -415,7 +418,6 @@ const ProductScreen = () => {
                                     }
                                 >
                                     <div className="py-5">
-                                        {/* --- REVIEW SUMMARY SECTION --- */}
                                         <Row className="mb-5 align-items-center">
                                             <Col
                                                 md={3}
@@ -438,7 +440,6 @@ const ProductScreen = () => {
 
                                             <Col md={6} className="px-md-5">
                                                 {[5, 4, 3, 2, 1].map((num) => {
-                                                    // 1. Calculate how many reviews have this specific star rating
                                                     const starCount =
                                                         product?.reviews?.filter(
                                                             (r) =>
@@ -446,7 +447,6 @@ const ProductScreen = () => {
                                                                 num,
                                                         ).length || 0;
 
-                                                    // 2. Calculate the percentage relative to the total number of reviews
                                                     const totalReviews =
                                                         product?.reviews
                                                             ?.length || 0;
@@ -504,7 +504,6 @@ const ProductScreen = () => {
 
                                         <hr className="my-5" />
 
-                                        {/* --- WRITE A REVIEW FORM --- */}
                                         <div className="write-review-container p-4 rounded-4 shadow-sm bg-white border">
                                             <h4 className="fw-bold mb-4 position-relative d-inline-block">
                                                 Write a Review
@@ -585,8 +584,15 @@ const ProductScreen = () => {
                                                         style={{
                                                             border: "none",
                                                         }}
+                                                        disabled={
+                                                            loadingProductReview
+                                                        }
                                                     >
-                                                        Submit Review
+                                                        {loadingProductReview ? (
+                                                            <Loader />
+                                                        ) : (
+                                                            "Submit Review"
+                                                        )}
                                                     </Button>
                                                 </Form>
                                             ) : (
@@ -624,7 +630,6 @@ const ProductScreen = () => {
                                     >
                                         <div className="d-flex justify-content-between align-items-start mb-3">
                                             <div className="d-flex align-items-center">
-                                                {/* Placeholder Avatar */}
                                                 <div
                                                     className="rounded-circle bg-light d-flex align-items-center justify-content-center me-3"
                                                     style={{
@@ -672,7 +677,7 @@ const ProductScreen = () => {
                     </div>
                 </>
             )}
-        </>
+        </Container>
     );
 };
 export default ProductScreen;
