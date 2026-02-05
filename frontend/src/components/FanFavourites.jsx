@@ -6,13 +6,13 @@ import { Navigation } from "swiper/modules";
 
 function FanFavourites({ products }) {
     return (
-        <section className="py-5">
-            <h2 className="text-center mb-4">Fan Favourites</h2>
+        <section className="py-5 bg-white">
+            <h2 className="text-center mb-5 fw-bold">Fan Favourites</h2>
 
             <Swiper
                 modules={[Navigation]}
                 navigation
-                spaceBetween={30}
+                spaceBetween={15}
                 breakpoints={{
                     0: { slidesPerView: 2 },
                     576: { slidesPerView: 3 },
@@ -21,27 +21,41 @@ function FanFavourites({ products }) {
                 }}
             >
                 {products.map((product) => (
-                    <SwiperSlide key={product._id}>
-                        <div className="text-center w-100 px-2">
-                            <div className="ratio ratio-1x1 mb-3">
-                                <Link to={`/product/${product._id}`}>
+                    <SwiperSlide key={product._id} className="h-auto">
+                        <div className="text-center w-100 px-2 d-flex flex-column h-100">
+                            <div
+                                className="mb-3 d-flex align-items-center justify-content-center bg-white rounded-3"
+                                style={{ height: "160px", overflow: "hidden" }}
+                            >
+                                <Link
+                                    to={`/product/${product._id}`}
+                                    className="w-100 h-100 d-flex align-items-center justify-content-center"
+                                >
                                     <img
                                         src={product.image}
                                         alt={product.name}
-                                        className="object-fit-contain p-2"
-                                        style={{ maxHeight: "200px" }}
+                                        style={{
+                                            maxHeight: "90%",
+                                            maxWidth: "90%",
+                                            objectFit: "contain",
+                                        }}
                                     />
                                 </Link>
                             </div>
-                            <Link
-                                to={`/product/${product._id}`}
-                                className="text-decoration-none text-reset"
-                            >
-                                <p className="fw-medium mb-1 text-truncate">
-                                    {product.name}
+
+                            <div className="mt-auto">
+                                <Link
+                                    to={`/product/${product._id}`}
+                                    className="text-decoration-none text-dark"
+                                >
+                                    <p className="fw-bold mb-1 text-truncate small">
+                                        {product.name}
+                                    </p>
+                                </Link>
+                                <p className="text-muted mb-2 small">
+                                    ${product.price}
                                 </p>
-                            </Link>
-                            <p className="text-muted mb-0">${product.price}</p>
+                            </div>
                         </div>
                     </SwiperSlide>
                 ))}
