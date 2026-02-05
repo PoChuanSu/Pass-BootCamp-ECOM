@@ -15,7 +15,7 @@ const categories = [
     {
         title: "Explore All",
         image: "/images/all.jpg",
-        link: "/shop",
+        link: "/products",
     },
 ];
 

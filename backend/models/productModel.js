@@ -66,6 +66,14 @@ const productSchema = new mongoose.Schema(
             default: 0,
         },
         price: { type: Number, required: true, default: 0 },
+        salePrice: {
+            type: Number,
+            default: 0,
+        },
+        isOnSale: {
+            type: Boolean,
+            default: false,
+        },
         countInStock: { type: Number, required: true, default: 0 },
     },
     { timestamps: true },

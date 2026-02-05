@@ -1,93 +1,111 @@
-import { Container, Row, Col, Card, Badge, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Row, Col, Container, Form } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import Product from "../components/Product";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import Paginate from "../components/Paginate";
+import { useGetProductsQuery } from "../slices/productsApiSlice";
+import { FaFilter } from "react-icons/fa";
 
 const NewScreen = () => {
-    // Mock Data for New Arrivals
-    const newProducts = [
-        {
-            id: 1,
-            name: "Mechanical Keyboard X1",
-            price: 120,
-            image: "https://placehold.co/600x400/222/fff?text=Keyboard",
-        },
-        {
-            id: 2,
-            name: "Ergo Mouse Pro",
-            price: 85,
-            image: "https://placehold.co/600x400/222/fff?text=Mouse",
-        },
-        {
-            id: 3,
-            name: "Ultrawide Monitor Stand",
-            price: 200,
-            image: "https://placehold.co/600x400/222/fff?text=Stand",
-        },
-        {
-            id: 4,
-            name: "Noise Cancelling Headset",
-            price: 150,
-            image: "https://placehold.co/600x400/222/fff?text=Headset",
-        },
-    ];
+    const { pageNumber } = useParams();
+    const [sortOption, setSortOption] = useState("newest");
+    const { data, isLoading, error } = useGetProductsQuery({
+        pageNumber,
+        keyword: "",
+    });
+
+    let sortedProducts = [];
+    if (data && data.products) {
+        sortedProducts = [...data.products];
+        if (sortOption === "newest") {
+            sortedProducts.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+            );
+        } else if (sortOption === "price-asc") {
+            sortedProducts.sort((a, b) => a.price - b.price);
+        } else if (sortOption === "price-desc") {
+            sortedProducts.sort((a, b) => b.price - a.price);
+        } else if (sortOption === "top-rated") {
+            sortedProducts.sort((a, b) => b.rating - a.rating);
+        }
+    }
 
     return (
-        <section className="py-5 bg-white">
-            <Container>
-                {/* Header Section */}
-                <div className="mb-5 border-bottom pb-3">
-                    <h6
-                        className="text-uppercase fw-bold text-muted"
-                        style={{ letterSpacing: "2px" }}
+        <Container>
+            <div className="d-flex justify-content-between align-items-center py-4 mb-5 border-bottom">
+                <div className="fs-4">
+                    <Link
+                        to="/"
+                        className="text-decoration-none text-dark fw-bold"
                     >
-                        Just Landed
-                    </h6>
-                    <h1 className="display-4 fw-bold">New Arrivals</h1>
+                        Home
+                    </Link>
+
+                    <span className="mx-3 text-muted">/</span>
+                    <Link
+                        to="/products"
+                        className="text-decoration-none text-dark"
+                    >
+                        All Products
+                    </Link>
+
+                    <span className="mx-3 text-muted">/</span>
+                    <span className="text-muted fw-bold">New In</span>
                 </div>
 
-                {/* Product Grid */}
-                <Row>
-                    {newProducts.map((product) => (
-                        <Col
-                            key={product.id}
-                            sm={12}
-                            md={6}
-                            lg={4}
-                            xl={3}
-                            className="mb-4"
-                        >
-                            <Card className="h-100 border-0 shadow-sm">
-                                <div className="position-relative">
-                                    <Badge
-                                        bg="dark"
-                                        className="position-absolute top-0 start-0 m-3 px-3 py-2 rounded-0"
-                                    >
-                                        NEW
-                                    </Badge>
-                                    <Card.Img
-                                        variant="top"
-                                        src={product.image}
-                                        className="rounded-0"
-                                    />
-                                </div>
-                                <Card.Body className="d-flex flex-column">
-                                    <Card.Title className="fw-bold">
-                                        {product.name}
-                                    </Card.Title>
-                                    <Card.Text className="lead fs-6">
-                                        ${product.price.toFixed(2)}
-                                    </Card.Text>
-                                    <Button
-                                        variant="outline-dark"
-                                        className="mt-auto rounded-0 w-100"
-                                    >
-                                        View Details
-                                    </Button>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
-            </Container>
-        </section>
+                <div className="d-flex align-items-center">
+                    <FaFilter size={20} className="me-3 text-muted" />
+
+                    <Form.Select
+                        className="border-0 bg-light rounded-0 py-2 fs-5"
+                        style={{ width: "220px", cursor: "pointer" }}
+                        value={sortOption}
+                        onChange={(e) => setSortOption(e.target.value)}
+                    >
+                        <option value="newest">Newest Arrivals</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="top-rated">Top Rated</option>
+                    </Form.Select>
+                </div>
+            </div>
+
+            {isLoading ? (
+                <Loader />
+            ) : error ? (
+                <Message variant="danger">
+                    {error?.data?.message || error.error}
+                </Message>
+            ) : (
+                <>
+                    <Row>
+                        {sortedProducts.map((product) => (
+                            <Col
+                                key={product._id}
+                                sm={12}
+                                md={6}
+                                lg={4}
+                                xl={3}
+                                className="mb-4"
+                            >
+                                <Product product={product} />
+                            </Col>
+                        ))}
+                    </Row>
+
+                    <div className="d-flex justify-content-center mt-5 mb-5">
+                        <Paginate
+                            pages={data.pages}
+                            page={data.page}
+                            isAdmin={false}
+                            keyword={""}
+                        />
+                    </div>
+                </>
+            )}
+        </Container>
     );
 };
 

@@ -1,122 +1,123 @@
-import { Container, Row, Col, Card, Button, Badge } from "react-bootstrap";
-import { FaBolt } from "react-icons/fa"; // npm install react-icons
+import { useState } from "react";
+import { Row, Col, Container, Form } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import Product from "../components/Product";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import Paginate from "../components/Paginate";
+import { useGetProductsQuery } from "../slices/productsApiSlice";
+import { FaFilter } from "react-icons/fa";
 
 const GamingScreen = () => {
-    // Mock Data for Gaming Products
-    const gamingProducts = [
-        {
-            id: 1,
-            name: "RTX 5090 Ti Founder",
-            price: 1999.0,
-            specs: "24GB GDDR7 • AI Cooling",
-            image: "https://placehold.co/600x400/111/fff?text=GPU+Monster",
-            badge: "Flagship",
-        },
-        {
-            id: 2,
-            name: "eSports Mouse Pro",
-            price: 120.0,
-            specs: "50g Weight • 8K Polling",
-            image: "https://placehold.co/600x400/111/fff?text=Ultralight+Mouse",
-        },
-        {
-            id: 3,
-            name: "360Hz OLED Monitor",
-            price: 950.0,
-            specs: "0.03ms Response • HDR1000",
-            image: "https://placehold.co/600x400/111/fff?text=OLED+Display",
-            badge: "High FPS",
-        },
-        {
-            id: 4,
-            name: "60% Mech Keyboard",
-            price: 140.0,
-            specs: "Rapid Trigger • PBT Caps",
-            image: "https://placehold.co/600x400/111/fff?text=60%25+Keyboard",
-        },
-        {
-            id: 5,
-            name: "Open-Back Headset",
-            price: 250.0,
-            specs: "Planar Magnetic • Wide Soundstage",
-            image: "https://placehold.co/600x400/111/fff?text=Audiophile+Set",
-        },
-        {
-            id: 6,
-            name: "Glass Mousepad",
-            price: 80.0,
-            specs: "Zero Friction • Tempered Glass",
-            image: "https://placehold.co/600x400/111/fff?text=Speed+Pad",
-        },
-    ];
+    const { pageNumber } = useParams();
+    const [sortOption, setSortOption] = useState("newest");
+
+    const { data, isLoading, error } = useGetProductsQuery({
+        pageNumber,
+        keyword: "",
+    });
+
+    let displayedProducts = [];
+    if (data && data.products) {
+        const gamingItems = data.products.filter(
+            (p) =>
+                p.category === "Gaming" ||
+                p.name.toLowerCase().includes("playstation") ||
+                p.name.toLowerCase().includes("mouse"),
+        );
+
+        displayedProducts = [...gamingItems];
+
+        if (sortOption === "newest") {
+            displayedProducts.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+            );
+        } else if (sortOption === "price-asc") {
+            displayedProducts.sort((a, b) => a.price - b.price);
+        } else if (sortOption === "price-desc") {
+            displayedProducts.sort((a, b) => b.price - a.price);
+        } else if (sortOption === "top-rated") {
+            displayedProducts.sort((a, b) => b.rating - a.rating);
+        }
+    }
 
     return (
-        <section className="py-5 bg-white">
-            <Container>
-                {/* Header Banner - Darker Theme for Gaming */}
-                <div className="bg-dark text-white p-5 mb-5 rounded-0 text-center">
-                    <h1 className="display-4 fw-bold">
-                        <FaBolt className="me-3 text-warning" />
-                        Performance Lab
-                    </h1>
-                    <p
-                        className="lead text-white-50 mx-auto"
-                        style={{ maxWidth: "600px" }}
+        <Container>
+            <div className="d-flex justify-content-between align-items-center py-4 mb-5 border-bottom">
+                <div className="fs-4">
+                    <Link
+                        to="/"
+                        className="text-decoration-none text-dark fw-bold"
                     >
-                        Unfair advantages engineered for competitive play. Low
-                        latency, high precision, zero compromise.
-                    </p>
+                        Home
+                    </Link>
+                    <span className="mx-3 text-muted">/</span>
+                    <Link
+                        to="/products"
+                        className="text-decoration-none text-muted"
+                    >
+                        All Products
+                    </Link>
+                    <span className="mx-3 text-muted">/</span>
+                    <span className="text-muted fw-bold">Gaming</span>
                 </div>
 
-                {/* Product Grid */}
-                <Row>
-                    {gamingProducts.map((product) => (
-                        <Col
-                            key={product.id}
-                            sm={12}
-                            md={6}
-                            lg={4}
-                            className="mb-4"
-                        >
-                            <Card className="h-100 border-0 shadow-sm">
-                                <div className="position-relative">
-                                    {product.badge && (
-                                        <Badge
-                                            bg="danger"
-                                            className="position-absolute top-0 start-0 m-3 px-3 py-2 rounded-0"
-                                        >
-                                            {product.badge}
-                                        </Badge>
-                                    )}
-                                    <Card.Img
-                                        variant="top"
-                                        src={product.image}
-                                        className="rounded-0"
-                                    />
-                                </div>
-                                <Card.Body className="d-flex flex-column">
-                                    <Card.Title className="fw-bold fs-5">
-                                        {product.name}
-                                    </Card.Title>
-                                    <Card.Subtitle className="mb-2 text-danger small fw-bold">
-                                        {product.specs}
-                                    </Card.Subtitle>
-                                    <Card.Text className="fs-5 fw-bold mt-2">
-                                        ${product.price.toFixed(2)}
-                                    </Card.Text>
-                                    <Button
-                                        variant="dark"
-                                        className="mt-auto rounded-0 w-100 fw-bold"
-                                    >
-                                        Add to Setup
-                                    </Button>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
-            </Container>
-        </section>
+                <div className="d-flex align-items-center">
+                    <FaFilter size={20} className="me-3 text-muted" />
+                    <Form.Select
+                        className="border-0 bg-light rounded-0 py-2 fs-5"
+                        style={{ width: "220px", cursor: "pointer" }}
+                        value={sortOption}
+                        onChange={(e) => setSortOption(e.target.value)}
+                    >
+                        <option value="newest">Newest Arrivals</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="top-rated">Top Rated</option>
+                    </Form.Select>
+                </div>
+            </div>
+
+            {isLoading ? (
+                <Loader />
+            ) : error ? (
+                <Message variant="danger">
+                    {error?.data?.message || error.error}
+                </Message>
+            ) : (
+                <>
+                    {displayedProducts.length === 0 ? (
+                        <Message variant="info">
+                            No gaming products found on this page.
+                        </Message>
+                    ) : (
+                        <Row>
+                            {displayedProducts.map((product) => (
+                                <Col
+                                    key={product._id}
+                                    sm={12}
+                                    md={6}
+                                    lg={4}
+                                    xl={3}
+                                    className="mb-4"
+                                >
+                                    <Product product={product} />
+                                </Col>
+                            ))}
+                        </Row>
+                    )}
+
+                    <div className="d-flex justify-content-center mt-5 mb-5">
+                        <Paginate
+                            pages={data.pages}
+                            page={data.page}
+                            isAdmin={false}
+                            keyword={""}
+                        />
+                    </div>
+                </>
+            )}
+        </Container>
     );
 };
 
