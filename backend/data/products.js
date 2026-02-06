@@ -5,7 +5,7 @@ const products = [
         description:
             "Bluetooth technology lets you connect it with compatible devices wirelessly. High-quality AAC audio offers immersive listening experience. Built-in microphone allows you to take calls while working.",
         brand: "Apple",
-        category: "Electronics",
+        category: "Office",
         price: 89.99,
         salePrice: 0,
         isOnSale: false,
@@ -19,7 +19,7 @@ const products = [
         description:
             "Introducing the iPhone 17 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life.",
         brand: "Apple",
-        category: "Electronics",
+        category: "Office",
         price: 799.99,
         salePrice: 599.99,
         isOnSale: true,
@@ -117,7 +117,7 @@ const products = [
         description:
             "Smart speaker with Alexa. The sleek, compact design delivers crisp vocals and balanced bass for a full sound.",
         brand: "Amazon",
-        category: "Electronics",
+        category: "Office",
         price: 49.99,
         salePrice: 29.99,
         isOnSale: true,

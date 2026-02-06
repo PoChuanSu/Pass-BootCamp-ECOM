@@ -26,7 +26,7 @@ const MainMenu = () => {
 
                         <LinkContainer
                             className="px-md-3 px-xl-4"
-                            to="/new"
+                            to="/new/page/1"
                             end
                         >
                             <Nav.Link className="text-nowrap">New In</Nav.Link>
@@ -34,7 +34,7 @@ const MainMenu = () => {
 
                         <LinkContainer
                             className="px-md-3 px-xl-4"
-                            to="/office"
+                            to="/office/page/1"
                             end
                         >
                             <Nav.Link>Office</Nav.Link>
@@ -42,7 +42,7 @@ const MainMenu = () => {
 
                         <LinkContainer
                             className="px-md-3 px-xl-4"
-                            to="/gaming"
+                            to="/gaming/page/1"
                             end
                         >
                             <Nav.Link>Gaming</Nav.Link>
@@ -50,7 +50,7 @@ const MainMenu = () => {
 
                         <LinkContainer
                             className="px-md-3 px-xl-4"
-                            to="/sale"
+                            to="/sale/page/1"
                             end
                         >
                             <Nav.Link>Sale</Nav.Link>

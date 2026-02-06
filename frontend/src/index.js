@@ -5,9 +5,9 @@ import {
     createRoutesFromElements,
     Route,
     RouterProvider,
-} from "react-router-dom"; //npm i react-router-dom
-import { PayPalScriptProvider } from "@paypal/react-paypal-js"; //  npm i @paypal/react-paypal-js
-import { HelmetProvider } from "react-helmet-async"; // npm i react-helmet-async
+} from "react-router-dom";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
 import store from "./store";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -45,21 +45,19 @@ const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<App />}>
             <Route index={true} path="/" element={<HomeScreen />} />
-            <Route path="/search/:keyword" element={<HomeScreen />} />
-            <Route path="/page/:pageNumber" element={<HomeScreen />} />
-            <Route
-                path="/search/:keyword/page/:pageNumber"
-                element={<HomeScreen />}
-            />
+            <Route path="/sale/page/:pageNumber" element={<SaleScreen />} />
             <Route path="/product/:id" element={<ProductScreen />} />
             <Route path="/cart" element={<CartScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/about" element={<AboutMeScreen />} />
-            <Route path="/new" element={<NewScreen />} />
-            <Route path="/office" element={<OfficeScreen />} />
-            <Route path="/gaming" element={<GamingScreen />} />
-            <Route path="/products" element={<ProductsScreen />} />
+            <Route path="/new/page/:pageNumber" element={<NewScreen />} />
+            <Route path="/office/page/:pageNumber" element={<OfficeScreen />} />
+            <Route path="/gaming/page/:pageNumber" element={<GamingScreen />} />
+            <Route
+                path="/products/page/:pageNumber"
+                element={<ProductsScreen />}
+            />
             <Route path="/sale" element={<SaleScreen />} />
             <Route path="/contact" element={<ContactScreen />} />
 

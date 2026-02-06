@@ -14,27 +14,23 @@ const OfficeScreen = () => {
 
     const { data, isLoading, error } = useGetProductsQuery({
         pageNumber,
-        keyword: "",
+        category: "Office",
     });
 
-    let displayedProducts = [];
+    let sortedProducts = [];
     if (data && data.products) {
-        const officeItems = data.products.filter(
-            (p) => p.category === "Electronics" || p.category === "Office",
-        );
-
-        displayedProducts = [...officeItems];
+        sortedProducts = [...data.products];
 
         if (sortOption === "newest") {
-            displayedProducts.sort(
+            sortedProducts.sort(
                 (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
             );
         } else if (sortOption === "price-asc") {
-            displayedProducts.sort((a, b) => a.price - b.price);
+            sortedProducts.sort((a, b) => a.price - b.price);
         } else if (sortOption === "price-desc") {
-            displayedProducts.sort((a, b) => b.price - a.price);
+            sortedProducts.sort((a, b) => b.price - a.price);
         } else if (sortOption === "top-rated") {
-            displayedProducts.sort((a, b) => b.rating - a.rating);
+            sortedProducts.sort((a, b) => b.rating - a.rating);
         }
     }
 
@@ -83,13 +79,13 @@ const OfficeScreen = () => {
                 </Message>
             ) : (
                 <>
-                    {displayedProducts.length === 0 ? (
+                    {sortedProducts.length === 0 ? (
                         <Message variant="info">
                             No office products found on this page.
                         </Message>
                     ) : (
                         <Row>
-                            {displayedProducts.map((product) => (
+                            {sortedProducts.map((product) => (
                                 <Col
                                     key={product._id}
                                     sm={12}
@@ -106,6 +102,7 @@ const OfficeScreen = () => {
 
                     <div className="d-flex justify-content-center mt-5 mb-5">
                         <Paginate
+                            category="Office"
                             pages={data.pages}
                             page={data.page}
                             isAdmin={false}

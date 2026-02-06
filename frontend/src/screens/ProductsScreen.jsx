@@ -55,7 +55,7 @@ const ProductsScreen = () => {
                         className="border-0 bg-light rounded-0 py-2 fs-5"
                         style={{ width: "220px", cursor: "pointer" }}
                         value={sortOption}
-                        onChange={(e) => setSortOption(e.target.value)} // 4. Update state on change
+                        onChange={(e) => setSortOption(e.target.value)}
                     >
                         <option value="newest">Newest Arrivals</option>
                         <option value="price-asc">Price: Low to High</option>
@@ -74,7 +74,6 @@ const ProductsScreen = () => {
             ) : (
                 <>
                     <Row>
-                        {/* 5. Map over sortedProducts instead of data.products */}
                         {sortedProducts.map((product) => (
                             <Col
                                 key={product._id}
@@ -89,8 +88,9 @@ const ProductsScreen = () => {
                         ))}
                     </Row>
 
-                    <div className="d-flex justify-content-center mt-5 mb-5">
+                    <div className="d-flex justify-content-center mt-5 mb-5 ">
                         <Paginate
+                            category={"products"}
                             pages={data.pages}
                             page={data.page}
                             isAdmin={false}

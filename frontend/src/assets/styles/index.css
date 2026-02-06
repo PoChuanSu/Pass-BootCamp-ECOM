@@ -240,3 +240,30 @@ table th {
 .swiper-button-prev {
     color: black !important;
 }
+
+.pagination .page-link {
+    background-color: #ffffff;
+    color: #212529;
+    border: 1px solid #dee2e6;
+    padding: 0.5rem 0.75rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #212529;
+    border-color: #212529;
+    color: #ffffff;
+    z-index: 3;
+}
+
+.pagination .page-link:hover {
+    background-color: #f8f9fa;
+    color: #000000;
+    border-color: #dee2e6;
+}
+
+.pagination .page-link:focus {
+    box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.25);
+    background-color: #ffffff;
+    color: #212529;
+}

@@ -13,7 +13,6 @@ const NewScreen = () => {
     const [sortOption, setSortOption] = useState("newest");
     const { data, isLoading, error } = useGetProductsQuery({
         pageNumber,
-        keyword: "",
     });
 
     let sortedProducts = [];
@@ -97,6 +96,7 @@ const NewScreen = () => {
 
                     <div className="d-flex justify-content-center mt-5 mb-5">
                         <Paginate
+                            category="new"
                             pages={data.pages}
                             page={data.page}
                             isAdmin={false}

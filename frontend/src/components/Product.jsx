@@ -27,8 +27,19 @@ const Product = ({ product }) => {
                     />
                 </Card.Text>
 
-                <Card.Text as="h3" className="mt-auto">
-                    ${product.price}
+                <Card.Text as="div" className="mt-auto">
+                    {product.salePrice && product.salePrice < product.price ? (
+                        <div className="d-flex align-items-center">
+                            <span className="text-danger fw-bold fs-4 me-2">
+                                ${product.salePrice}
+                            </span>
+                            <span className="text-muted text-decoration-line-through small">
+                                ${product.price}
+                            </span>
+                        </div>
+                    ) : (
+                        <h3 className="fs-4">${product.price}</h3>
+                    )}
                 </Card.Text>
             </Card.Body>
         </Card>

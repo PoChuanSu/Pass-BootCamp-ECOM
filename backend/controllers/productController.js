@@ -8,14 +8,25 @@ const getProducts = asyncHandler(async (req, res) => {
     const pageSize = 8;
     const page = Number(req.query.pageNumber) || 1;
 
-    const keyword = req.query.keyword
-        ? { name: { $regex: req.query.keyword, $options: "i" } }
-        : {};
-    const count = await Product.countDocuments({ ...keyword });
+    const query = {};
 
-    const products = await Product.find({ ...keyword })
+    if (req.query.keyword) {
+        query.name = { $regex: req.query.keyword, $options: "i" };
+    }
+
+    if (req.query.category) {
+        query.category = req.query.category;
+    }
+
+    if (req.query.isOnSale === "true") {
+        query.isOnSale = true;
+    }
+
+    const count = await Product.countDocuments(query);
+    const products = await Product.find(query)
         .limit(pageSize)
-        .skip(pageSize * (page - 1));
+        .skip(pageSize * (page - 1))
+        .sort({ createdAt: -1, _id: 1 });
 
     res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
