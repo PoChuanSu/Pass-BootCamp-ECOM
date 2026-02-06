@@ -13,7 +13,6 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
 
     return (
         <div className="position-relative mb-5 mt-4">
-            {/* The Background Line */}
             <div
                 className="position-absolute top-0 start-50 translate-middle-x w-75 border-bottom"
                 style={{ marginTop: "20px", zIndex: 0 }}

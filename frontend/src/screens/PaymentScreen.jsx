@@ -6,6 +6,7 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import { useCreateOrderMutation } from "../slices/ordersApiSlice";
 import { clearCartItems } from "../slices/cartSlice";
 import { toast } from "react-toastify";
+import SummaryCard from "../components/SummaryCard";
 
 const PaymentScreen = () => {
     const [paymentMethod, setPaymentMethod] = useState("Pay After Arrival");
@@ -16,6 +17,7 @@ const PaymentScreen = () => {
 
     const cart = useSelector((state) => state.cart);
     const { shippingAddress, cartItems } = cart;
+    const { userInfo } = useSelector((state) => state.auth);
 
     const subtotal = cartItems
         .reduce((acc, item) => acc + item.qty * item.price, 0)
@@ -50,16 +52,13 @@ const PaymentScreen = () => {
 
     return (
         <div className="container pb-5 mt-4">
-            {/* Step 4: Payment */}
             <CheckoutSteps step1 step2 step3 step4 />
 
             <Form onSubmit={placeOrderHandler}>
                 <Row className="mt-5">
-                    {/* LEFT COLUMN: Payment Method Accordions */}
                     <Col lg={4} md={6}>
                         <h2 className="fw-bold mb-4">Payment Method</h2>
-                        <Accordion defaultActiveKey="1" className="rounded-0">
-                            {/* Rewards Section */}
+                        <Accordion defaultActiveKey="2" className="rounded-0">
                             <Accordion.Item
                                 eventKey="0"
                                 className="border-bottom"
@@ -80,7 +79,6 @@ const PaymentScreen = () => {
                                                 type="text"
                                                 placeholder="Enter 10-digit number"
                                                 className="rounded-0 border-dark py-2"
-                                                // Add state/onChange here
                                             />
                                             <Button
                                                 variant="dark"
@@ -94,7 +92,6 @@ const PaymentScreen = () => {
                                 </Accordion.Body>
                             </Accordion.Item>
 
-                            {/* Credit / Debit Section */}
                             <Accordion.Item eventKey="1">
                                 <Accordion.Header className="fw-bold">
                                     Credit / Debit
@@ -141,7 +138,6 @@ const PaymentScreen = () => {
                         </Accordion>
                     </Col>
 
-                    {/* MIDDLE COLUMN: Review Address */}
                     <Col lg={4} md={6}>
                         <h2 className="fw-bold mb-4">Review Address</h2>
                         <Card className="rounded-0 border p-3">
@@ -173,45 +169,15 @@ const PaymentScreen = () => {
                         </Card>
                     </Col>
 
-                    {/* RIGHT COLUMN: Order Summary */}
                     <Col lg={4}>
-                        <div className="ps-lg-4">
-                            <h2 className="fw-bold mb-4">Order Summary</h2>
-                            <div className="d-flex justify-content-between mb-3 mt-4">
-                                <span className="fs-5 text-muted">
-                                    Subtotal
-                                </span>
-                                <span className="fw-bold fs-5">
-                                    ${subtotal}
-                                </span>
-                            </div>
-                            <div className="d-flex justify-content-between mb-2">
-                                <span className="fs-5 text-muted">
-                                    Total Shipping
-                                </span>
-                                <span className="fw-bold fs-5">
-                                    ${cart.shippingPrice}
-                                </span>
-                            </div>
-                            <hr className="my-4" />
-                            <div className="d-flex justify-content-between align-items-end mb-4">
-                                <div>
-                                    <h2 className="fw-bold mb-0">Total</h2>
-                                    <small className="text-muted fw-bold">
-                                        Including GST
-                                    </small>
-                                </div>
-                                <h2 className="fw-bold mb-0">${subtotal}</h2>
-                            </div>
-
-                            <Button
-                                type="submit"
-                                variant="dark"
-                                className="w-100 py-3 rounded-2 fw-bold fs-5 shadow-none"
-                            >
-                                Place Order
-                            </Button>
-                        </div>
+                        <SummaryCard
+                            cart={cart}
+                            cartItems={cart.cartItems}
+                            userInfo={userInfo}
+                            buttonText="Place Order"
+                            isLoading={isLoading}
+                            onCheckout={placeOrderHandler}
+                        />
                     </Col>
                 </Row>
             </Form>

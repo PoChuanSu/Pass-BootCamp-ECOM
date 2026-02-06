@@ -24,8 +24,14 @@ const addOrderItems = asyncHandler(async (req, res) => {
         const dbOrderItems = orderItems.map((itemFromClient) => {
             const matchingItemFromDB = itemsFromDB.find(
                 (itemFromDB) =>
-                    itemFromDB._id.toString() === itemFromClient._id,
+                    itemFromDB._id.toString() === itemFromClient._id.toString(),
             );
+
+            if (!matchingItemFromDB) {
+                res.status(404);
+                throw new Error(`Product not found: ${itemFromClient._id}`);
+            }
+
             return {
                 ...itemFromClient,
                 product: itemFromClient._id,

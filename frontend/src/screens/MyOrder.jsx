@@ -16,7 +16,7 @@ const MyOrderScreen = () => {
                 <Loader />
             ) : error ? (
                 <Message variant="danger">
-                    {error?.data?.message || error.error}
+                    You haven't placed any orders yet.
                 </Message>
             ) : (
                 <Table

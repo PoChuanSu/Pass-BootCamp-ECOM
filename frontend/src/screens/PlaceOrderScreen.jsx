@@ -6,15 +6,20 @@ import { toast } from "react-toastify";
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { useCreateOrderMutation } from "../slices/ordersApiSlice";
+import {
+    useCreateOrderMutation,
+    usePayOrderMutation,
+} from "../slices/ordersApiSlice";
 import { clearCartItems } from "../slices/cartSlice";
 
 const PlaceOrderScreen = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
+    const { userInfo } = useSelector((state) => state.auth);
 
     const [createOrder, { isLoading, error }] = useCreateOrderMutation();
+    const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
     useEffect(() => {
         if (!cart.shippingAddress.address) {
@@ -31,9 +36,10 @@ const PlaceOrderScreen = () => {
                 shippingAddress: cart.shippingAddress,
                 paymentMethod: cart.paymentMethod,
                 itemsPrice: cart.itemsPrice,
-                shippingPrice: cart.shiipingPrice,
+                shippingPrice: cart.shipingPrice,
                 totalPrice: cart.totalPrice,
             }).unwrap();
+
             dispatch(clearCartItems());
             navigate(`/order/${res._id}`);
         } catch (error) {

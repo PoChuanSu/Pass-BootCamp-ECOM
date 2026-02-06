@@ -4,17 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "../slices/cartSlice";
 import CheckoutSteps from "../components/CheckoutSteps";
-import { FaCheckSquare, FaSquare } from "react-icons/fa"; // For the custom checkbox look
+import { FaCheckSquare, FaRegSquare } from "react-icons/fa";
+import SummaryCard from "../components/SummaryCard";
 
 const ShippingScreen = () => {
     const cart = useSelector((state) => state.cart);
     const { userInfo } = useSelector((state) => state.auth);
     const { shippingAddress, cartItems } = cart;
 
-    // Standard fields from your image
     const [name, setName] = useState(userInfo?.name || "");
     const [email, setEmail] = useState(userInfo?.email || "");
-    const [mobile, setMobile] = useState(userInfo?.mobile || "");
+    const [mobile, setMobile] = useState(shippingAddress?.mobile || "");
     const [state, setState] = useState(shippingAddress?.state || "");
     const [city, setCity] = useState(shippingAddress?.city || "");
     const [postalCode, setPostalCode] = useState(
@@ -49,12 +49,10 @@ const ShippingScreen = () => {
 
     return (
         <div className="container pb-5 mt-4">
-            {/* Step 3: Address */}
             <CheckoutSteps step1 step2 step3 />
 
             <Form onSubmit={submitHandler}>
                 <Row className="mt-5">
-                    {/* LEFT COLUMN: Delivery Address */}
                     <Col lg={4} md={6}>
                         <h2 className="fw-bold mb-4">Delivery Address</h2>
 
@@ -169,7 +167,6 @@ const ShippingScreen = () => {
                         </Form.Group>
                     </Col>
 
-                    {/* MIDDLE COLUMN: Billing Address */}
                     <Col lg={4} md={6}>
                         <h2 className="fw-bold mb-4">Billing Address</h2>
                         <div
@@ -183,7 +180,7 @@ const ShippingScreen = () => {
                                     size={20}
                                 />
                             ) : (
-                                <FaSquare
+                                <FaRegSquare
                                     className="me-2 text-muted"
                                     size={20}
                                 />
@@ -194,46 +191,14 @@ const ShippingScreen = () => {
                         </div>
                     </Col>
 
-                    {/* RIGHT COLUMN: Order Summary */}
                     <Col lg={4}>
-                        <div className="ps-lg-4">
-                            <h2 className="fw-bold mb-4">Order Summary</h2>
-                            <div className="d-flex justify-content-between mb-3 mt-4">
-                                <span className="fs-5 text-muted">
-                                    Subtotal
-                                </span>
-                                <span className="fw-bold fs-5">
-                                    ${subtotal}
-                                </span>
-                            </div>
-                            <div className="d-flex justify-content-between mb-2">
-                                <span className="fs-5 text-muted">
-                                    Estimated Shipping
-                                </span>
-                                <span className="fw-bold fs-5">FREE</span>
-                            </div>
-                            <p className="text-muted small mb-4">
-                                Actual shipping cost is calculated once we know
-                                your delivery details
-                            </p>
-                            <hr className="my-4" />
-                            <div className="d-flex justify-content-between align-items-end mb-4">
-                                <div>
-                                    <h2 className="fw-bold mb-0">Total</h2>
-                                    <small className="text-muted fw-bold">
-                                        Including GST
-                                    </small>
-                                </div>
-                                <h2 className="fw-bold mb-0">${subtotal}</h2>
-                            </div>
-                            <Button
-                                type="submit"
-                                variant="dark"
-                                className="w-100 py-3 rounded-2 fw-bold fs-5"
-                            >
-                                Continue to Payment
-                            </Button>
-                        </div>
+                        <SummaryCard
+                            cart={cart}
+                            cartItems={cart.cartItems}
+                            userInfo={userInfo}
+                            buttonText="Continue to Payment"
+                            onCheckout={() => navigate("/payment")}
+                        />
                     </Col>
                 </Row>
             </Form>

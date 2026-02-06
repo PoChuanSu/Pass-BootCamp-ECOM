@@ -15,6 +15,7 @@ import { FaShop } from "react-icons/fa6";
 import Message from "../components/Message";
 import { addToCart, removeFromCart } from "../slices/cartSlice";
 import CheckoutSteps from "../components/CheckoutSteps";
+import SummaryCard from "../components/SummaryCard";
 
 const CartScreen = () => {
     const navigate = useNavigate();
@@ -23,12 +24,18 @@ const CartScreen = () => {
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
 
+    const { userInfo } = useSelector((state) => state.auth);
+
     const addToCartHandler = (product, qty) => {
         dispatch(addToCart({ ...product, qty }));
     };
 
     const removeFromCartHandler = (id) => {
         dispatch(removeFromCart(id));
+    };
+
+    const checkoutHandler = () => {
+        navigate(userInfo ? "/delivery" : "/login?redirect=/delivery");
     };
 
     return (
@@ -207,70 +214,12 @@ const CartScreen = () => {
                 </Col>
 
                 <Col lg={4}>
-                    <Card className="border-0 shadow-sm p-3 rounded-4 bg-white">
-                        <h4 className="fw-bold mb-4">Order Summary</h4>
-                        <div className="d-flex justify-content-between mb-3">
-                            <span className="text-muted">Total</span>
-                            <span className="fw-bold">
-                                $
-                                {cartItems
-                                    .reduce(
-                                        (acc, item) =>
-                                            acc + item.qty * item.price,
-                                        0,
-                                    )
-                                    .toFixed(2)}
-                            </span>
-                        </div>
-
-                        <div className="d-flex justify-content-between mb-3">
-                            <span className="text-muted">Shipping</span>
-                            <span className="fw-bold">
-                                ${cart.shippingPrice}
-                            </span>
-                        </div>
-
-                        <div className="w-100 d-flex justify-content-center align-items-center">
-                            <Form.Control
-                                placeholder="Coupon code"
-                                className="bg-light border-0"
-                            />
-                            <Button variant="dark" className="ms-2 px-4 ">
-                                Apply
-                            </Button>
-                        </div>
-
-                        <div className="d-flex justify-content-between pt-3 border-top mt-3">
-                            <h4 className="fw-bold">Total</h4>
-                            <h4 className="fw-bold">
-                                $
-                                {cartItems
-                                    .reduce(
-                                        (acc, item) =>
-                                            acc + item.qty * item.price,
-                                        0,
-                                    )
-                                    .toFixed(2)}
-                            </h4>
-                        </div>
-                        <Button
-                            variant="dark"
-                            className="w-100 py-3 mt-4 rounded-3 d-flex align-items-center justify-content-center fw-bold"
-                            onClick={() =>
-                                navigate("/login?redirect=/delivery")
-                            }
-                        >
-                            Sign in and Checkout{" "}
-                        </Button>
-
-                        <Button
-                            variant="light"
-                            className="w-100 mt-3 text-dark text-decoration-none small fw-bold"
-                            onClick={() => navigate("/")}
-                        >
-                            Checkout as Guest
-                        </Button>
-                    </Card>
+                    <SummaryCard
+                        cart={cart}
+                        cartItems={cartItems}
+                        userInfo={userInfo}
+                        onCheckout={checkoutHandler}
+                    />
                 </Col>
             </Row>
         </>
