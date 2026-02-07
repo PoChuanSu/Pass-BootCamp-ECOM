@@ -1,6 +1,6 @@
-import { Table, Button, Container } from "react-bootstrap";
+import { Table, Button, Container, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { FaTimes } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { useGetMyOrdersQuery } from "../slices/ordersApiSlice";
@@ -9,72 +9,132 @@ const MyOrderScreen = () => {
     const { data: orders, isLoading, error } = useGetMyOrdersQuery();
 
     return (
-        <Container className="py-3">
-            <h1 className="mb-4">My Orders</h1>
+        <Container className="py-5">
+            <div className="d-flex justify-content-between align-items-center mb-5">
+                <h1 className="fw-bold mb-0">My Order</h1>
+                <p className="text-muted mb-0">
+                    {orders?.length || 0} orders placed
+                </p>
+            </div>
 
             {isLoading ? (
                 <Loader />
             ) : error ? (
-                <Message variant="danger">
-                    You haven't placed any orders yet.
-                </Message>
+                <div className="text-center py-5">
+                    <Message variant="info">
+                        You haven't placed any orders yet.
+                    </Message>
+                    <LinkContainer to="/">
+                        <Button
+                            variant="dark"
+                            className="mt-3 px-4 rounded-pill"
+                        >
+                            Start Shopping
+                        </Button>
+                    </LinkContainer>
+                </div>
             ) : (
-                <Table
-                    striped
-                    hover
-                    responsive
-                    className="table-sm align-middle"
-                >
-                    <thead>
-                        <tr className="text-uppercase">
-                            <th className="py-3">ID</th>
-                            <th className="py-3">Date</th>
-                            <th className="py-3">Total</th>
-                            <th className="py-3">Paid</th>
-                            <th className="py-3">Delivered</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {orders.map((order) => (
-                            <tr key={order._id}>
-                                <td className="py-3">{order._id}</td>
-                                <td className="py-3">
-                                    {order.createdAt.substring(0, 10)}
-                                </td>
-                                <td className="py-3">${order.totalPrice}</td>
-                                <td className="py-3">
-                                    {order.isPaid ? (
-                                        order.paidAt.substring(0, 10)
-                                    ) : (
-                                        <FaTimes style={{ color: "red" }} />
-                                    )}
-                                </td>
-                                <td className="py-3">
-                                    {order.isDelivered ? (
-                                        order.deliveredAt.substring(0, 10)
-                                    ) : (
-                                        <FaTimes style={{ color: "red" }} />
-                                    )}
-                                </td>
-                                <td className="py-3 text-end">
-                                    <LinkContainer to={`/order/${order._id}`}>
-                                        <Button
-                                            className="btn-sm px-3"
-                                            variant="light"
-                                            style={{
-                                                backgroundColor: "#f8f9fa",
-                                                border: "1px solid #dee2e6",
-                                            }}
-                                        >
-                                            Details
-                                        </Button>
-                                    </LinkContainer>
-                                </td>
+                <div className="border rounded-4 overflow-hidden shadow-sm bg-white">
+                    <Table hover responsive className="mb-0 align-middle">
+                        <thead className="bg-light border-bottom">
+                            <tr>
+                                <th className="ps-4 py-4 text-muted small fw-bold text-uppercase">
+                                    Order ID
+                                </th>
+                                <th className="py-4 text-muted small fw-bold text-uppercase">
+                                    Date
+                                </th>
+                                <th className="py-4 text-muted small fw-bold text-uppercase">
+                                    Total
+                                </th>
+                                <th className="py-4 text-muted small fw-bold text-uppercase">
+                                    Payment
+                                </th>
+                                <th className="py-4 text-muted small fw-bold text-uppercase">
+                                    Delivery
+                                </th>
+                                <th className="pe-4 py-4"></th>
                             </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {orders.map((order) => (
+                                <tr
+                                    key={order._id}
+                                    style={{ transition: "background 0.2s" }}
+                                >
+                                    <td className="ps-4 py-4">
+                                        <span className="text-muted small">
+                                            #{order._id.substring(18)}
+                                        </span>
+                                    </td>
+                                    <td className="py-4 fw-medium">
+                                        {new Date(
+                                            order.createdAt,
+                                        ).toLocaleDateString("en-AU", {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "numeric",
+                                        })}
+                                    </td>
+                                    <td className="py-4 fw-bold">
+                                        ${order.totalPrice.toFixed(2)}
+                                    </td>
+                                    <td className="py-4">
+                                        {order.isPaid ? (
+                                            <Badge
+                                                bg="success-subtle"
+                                                className="text-success border border-success-subtle px-3 py-2 rounded-pill fw-normal"
+                                            >
+                                                Paid{" "}
+                                                {order.paidAt.substring(5, 10)}
+                                            </Badge>
+                                        ) : (
+                                            <Badge
+                                                bg="secondary-subtle"
+                                                className="text-secondary border border-secondary-subtle px-3 py-2 rounded-pill fw-normal"
+                                            >
+                                                Unpaid
+                                            </Badge>
+                                        )}
+                                    </td>
+                                    <td className="py-4">
+                                        {order.isDelivered ? (
+                                            <Badge
+                                                bg="info-subtle"
+                                                className="text-info border border-info-subtle px-3 py-2 rounded-pill fw-normal"
+                                            >
+                                                Delivered
+                                            </Badge>
+                                        ) : (
+                                            <Badge
+                                                bg="warning-subtle"
+                                                className="text-warning border border-warning-subtle px-3 py-2 rounded-pill fw-normal"
+                                            >
+                                                In Progress
+                                            </Badge>
+                                        )}
+                                    </td>
+                                    <td className="pe-4 py-4 text-end">
+                                        <LinkContainer
+                                            to={`/order/${order._id}`}
+                                        >
+                                            <Button
+                                                variant="link"
+                                                className="text-dark p-0 d-flex align-items-center justify-content-end text-decoration-none fw-bold small"
+                                            >
+                                                DETAILS{" "}
+                                                <FaChevronRight
+                                                    className="ms-2"
+                                                    size={10}
+                                                />
+                                            </Button>
+                                        </LinkContainer>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </div>
             )}
         </Container>
     );

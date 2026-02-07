@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "../slices/cartSlice";
@@ -10,7 +10,7 @@ import SummaryCard from "../components/SummaryCard";
 const ShippingScreen = () => {
     const cart = useSelector((state) => state.cart);
     const { userInfo } = useSelector((state) => state.auth);
-    const { shippingAddress, cartItems } = cart;
+    const { shippingAddress } = cart;
 
     const [name, setName] = useState(userInfo?.name || "");
     const [email, setEmail] = useState(userInfo?.email || "");
@@ -25,10 +25,6 @@ const ShippingScreen = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const subtotal = cartItems
-        .reduce((acc, item) => acc + item.qty * item.price, 0)
-        .toFixed(2);
 
     const submitHandler = (e) => {
         e.preventDefault();

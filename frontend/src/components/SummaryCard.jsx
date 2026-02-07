@@ -20,11 +20,6 @@ const SummaryCard = ({
               .toFixed(2);
     const shippingPrice = order ? order.shippingPrice : cart?.shippingPrice;
     const totalPrice = order ? order.totalPrice : cart?.totalPrice;
-    const isPaid = order ? order.isPaid : false;
-
-    // const subtotal = cartItems
-    //     .reduce((acc, item) => acc + item.qty * item.price, 0)
-    //     .toFixed(2);
 
     return (
         <Card className="border-0 shadow-sm p-4 rounded-4 bg-white">

@@ -16,12 +16,8 @@ const PaymentScreen = () => {
     const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
     const cart = useSelector((state) => state.cart);
-    const { shippingAddress, cartItems } = cart;
+    const { shippingAddress } = cart;
     const { userInfo } = useSelector((state) => state.auth);
-
-    const subtotal = cartItems
-        .reduce((acc, item) => acc + item.qty * item.price, 0)
-        .toFixed(2);
 
     useEffect(() => {
         if (!shippingAddress?.address) {
