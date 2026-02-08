@@ -57,6 +57,10 @@ const router = createBrowserRouter(
             <Route path="/office/page/:pageNumber" element={<OfficeScreen />} />
             <Route path="/gaming/page/:pageNumber" element={<GamingScreen />} />
             <Route
+                path="/products/:keyword/page/:pageNumber"
+                element={<ProductsScreen />}
+            />
+            <Route
                 path="/products/page/:pageNumber"
                 element={<ProductsScreen />}
             />

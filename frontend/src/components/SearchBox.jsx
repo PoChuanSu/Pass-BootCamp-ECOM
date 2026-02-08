@@ -12,7 +12,7 @@ const SearchBox = () => {
         e.preventDefault();
         if (keyword.trim()) {
             setKeyword("");
-            navigate(`/search/${keyword}`);
+            navigate(`/products/${keyword}/page/1`);
         } else {
             navigate("/");
         }

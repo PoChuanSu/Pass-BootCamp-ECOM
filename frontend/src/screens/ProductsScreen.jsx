@@ -10,11 +10,12 @@ import { FaFilter } from "react-icons/fa";
 
 const ProductsScreen = () => {
     const { pageNumber } = useParams();
+    const { keyword: urlKeyword } = useParams();
     const [sortOption, setSortOption] = useState("newest");
 
     const { data, isLoading, error } = useGetProductsQuery({
         pageNumber,
-        keyword: "",
+        keyword: urlKeyword,
     });
 
     let sortedProducts = [];
