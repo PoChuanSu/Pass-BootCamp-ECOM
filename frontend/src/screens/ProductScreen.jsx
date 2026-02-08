@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { MdLocalOffer } from "react-icons/md";
 import { HiMinus, HiPlus } from "react-icons/hi";
-import { FaShoppingCart, FaRegHeart } from "react-icons/fa";
+import { FaShoppingCart, FaRegHeart, FaHeart } from "react-icons/fa";
 import { LuTruck, LuRefreshCw, LuShieldCheck } from "react-icons/lu";
 import {
     Tabs,
@@ -27,6 +27,7 @@ import {
     useCreateReviewMutation,
 } from "../slices/productsApiSlice";
 import { addToCart } from "../slices/cartSlice";
+import { toggleLike } from "../slices/wishlistSlice";
 import ClickRating from "../components/ClickRating";
 
 const ProductScreen = () => {
@@ -39,6 +40,12 @@ const ProductScreen = () => {
     const [rating, setRating] = useState(0);
     const [title, setTitle] = useState("");
     const [comment, setComment] = useState("");
+
+    const { wishlistItems } = useSelector(
+        (state) => state.wishlist || { wishlistItems: [] },
+    );
+
+    const isLiked = wishlistItems.some((x) => x._id === productId);
 
     const {
         data: product,
@@ -54,7 +61,16 @@ const ProductScreen = () => {
 
     const addToCartHandler = () => {
         dispatch(addToCart({ ...product, qty }));
-        navigate("/cart");
+        navigate("/login?redirect=/cart");
+    };
+
+    const buyNowHandler = () => {
+        dispatch(addToCart({ ...product, qty }));
+        navigate("/login?redirect=/cart");
+    };
+
+    const toggleLikeHandler = () => {
+        dispatch(toggleLike(product));
     };
 
     const submitHandler = async (e) => {
@@ -226,14 +242,23 @@ const ProductScreen = () => {
                                 <Button
                                     variant="outline-secondary"
                                     className="btn-lg flex-grow-1"
+                                    onClick={buyNowHandler}
+                                    disabled={product.countInStock === 0}
                                 >
                                     Buy Now
                                 </Button>
                                 <Button
-                                    variant="outline-dark"
+                                    variant={
+                                        isLiked ? "danger" : "outline-dark"
+                                    }
                                     className="btn-lg px-3"
+                                    onClick={toggleLikeHandler}
                                 >
-                                    <FaRegHeart size={22} />
+                                    {isLiked ? (
+                                        <FaHeart size={22} />
+                                    ) : (
+                                        <FaRegHeart size={22} />
+                                    )}
                                 </Button>
                             </div>
 

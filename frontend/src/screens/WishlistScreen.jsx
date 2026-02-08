@@ -1,7 +1,7 @@
 import { Container, Row, Col, Button, Image, ListGroup } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { FaTrash, FaShoppingCart, FaChevronLeft } from "react-icons/fa";
+import { FaTrash, FaShoppingCart } from "react-icons/fa";
 import Message from "../components/Message";
 import { addToCart } from "../slices/cartSlice";
 import { toggleLike } from "../slices/wishlistSlice";
