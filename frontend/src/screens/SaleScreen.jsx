@@ -14,7 +14,7 @@ const SaleScreen = () => {
 
     const { data, isLoading, error } = useGetProductsQuery({
         pageNumber,
-        keyword: "",
+        isOnSale: true,
     });
 
     let displayedProducts = [];
@@ -110,6 +110,7 @@ const SaleScreen = () => {
 
                     <div className="d-flex justify-content-center mt-5 mb-5">
                         <Paginate
+                            category={"sale"}
                             pages={data.pages}
                             page={data.page}
                             isAdmin={false}

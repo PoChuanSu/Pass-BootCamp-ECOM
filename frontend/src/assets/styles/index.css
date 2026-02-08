@@ -123,6 +123,18 @@ table th {
     display: none;
 }
 
+.icon-hover {
+    cursor: pointer;
+    transition:
+        transform 0.1s,
+        filter 0.2s;
+}
+
+.icon-hover:hover {
+    filter: brightness(0.6);
+    transform: scale(1.1);
+}
+
 .search-dropdown {
     position: static !important;
     border: none;

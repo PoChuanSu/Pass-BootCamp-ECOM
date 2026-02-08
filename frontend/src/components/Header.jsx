@@ -9,7 +9,7 @@ import {
     Col,
 } from "react-bootstrap";
 import { FaShoppingCart, FaUser, FaRegHeart, FaSearch } from "react-icons/fa";
-import { LinkContainer } from "react-router-bootstrap"; // npm i react-router-bootstrap
+import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
@@ -110,11 +110,15 @@ const Header = () => {
                                         </Nav.Link>
                                     </LinkContainer>
                                 )}
-                                <Nav.Link>
-                                    <FaRegHeart size={24} />
-                                </Nav.Link>
+                                <LinkContainer to="/wish">
+                                    <Nav.Link>
+                                        <div className="icon-hover">
+                                            <FaRegHeart size={24} />
+                                        </div>
+                                    </Nav.Link>
+                                </LinkContainer>
                                 <LinkContainer to="/cart">
-                                    <Nav.Link className="position-relative">
+                                    <Nav.Link className="position-relative icon-hover">
                                         <FaShoppingCart size={24} />
                                         {cartItems.length > 0 && (
                                             <Badge

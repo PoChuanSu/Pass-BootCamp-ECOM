@@ -40,6 +40,7 @@ import SaleScreen from "./screens/SaleScreen";
 import OfficeScreen from "./screens/OfficeScreen";
 import GamingScreen from "./screens/GamingScreen";
 import ProductsScreen from "./screens/ProductsScreen";
+import WishlistScreen from "./screens/WishlistScreen";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -48,6 +49,7 @@ const router = createBrowserRouter(
             <Route path="/sale/page/:pageNumber" element={<SaleScreen />} />
             <Route path="/product/:id" element={<ProductScreen />} />
             <Route path="/cart" element={<CartScreen />} />
+            <Route path="/wish" element={<WishlistScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/about" element={<AboutMeScreen />} />
