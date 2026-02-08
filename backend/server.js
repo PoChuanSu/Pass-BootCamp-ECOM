@@ -9,6 +9,7 @@ import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import cors from "cors";
 const port = process.env.PORT || 5000;
 
 connectDB();
@@ -19,6 +20,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // Cookie parser middleware
 app.use(cookieParser());
+
+// White list for frontend page
+const corsOptions = {
+    origin: "https://pass-bootcamp-ecom-frontend.onrender.com",
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
     res.send("API is running...");
