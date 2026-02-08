@@ -97,6 +97,9 @@ const router = createBrowserRouter(
                 />
             </Route>
         </Route>,
+        {
+            basename: "/Pass-BootCamp-ECOM",
+        },
     ),
 );
 
