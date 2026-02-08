@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Pass-BootCamp-ECOM/static/css/main.7581391a.css",
-    "main.js": "/Pass-BootCamp-ECOM/static/js/main.c38cd248.js",
+    "main.js": "/Pass-BootCamp-ECOM/static/js/main.43ec452e.js",
     "static/media/apples.jpg": "/Pass-BootCamp-ECOM/static/media/apples.5d50fb6731d31cbb588b.jpg",
     "static/media/logo.png": "/Pass-BootCamp-ECOM/static/media/logo.c16a00c924431f8d9f63.png",
     "index.html": "/Pass-BootCamp-ECOM/index.html",
     "main.7581391a.css.map": "/Pass-BootCamp-ECOM/static/css/main.7581391a.css.map",
-    "main.c38cd248.js.map": "/Pass-BootCamp-ECOM/static/js/main.c38cd248.js.map"
+    "main.43ec452e.js.map": "/Pass-BootCamp-ECOM/static/js/main.43ec452e.js.map"
   },
   "entrypoints": [
     "static/css/main.7581391a.css",
-    "static/js/main.c38cd248.js"
+    "static/js/main.43ec452e.js"
   ]
 }
