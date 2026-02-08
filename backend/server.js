@@ -24,6 +24,7 @@ app.use(cookieParser());
 // White list for frontend page
 const corsOptions = {
     origin: "https://pass-bootcamp-ecom-frontend.onrender.com",
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 };
 
