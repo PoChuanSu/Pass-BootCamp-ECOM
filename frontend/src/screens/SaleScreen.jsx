@@ -79,9 +79,7 @@ const SaleScreen = () => {
                 </div>
             </div>
 
-            {isLoading ? (
-                <Loader />
-            ) : error ? (
+            {error ? (
                 <Message variant="danger">
                     {error?.data?.message || error.error}
                 </Message>

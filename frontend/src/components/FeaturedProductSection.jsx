@@ -1,10 +1,8 @@
-import { Row, Col, Button, Card } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import appleCollections from "../assets/apples.jpg";
 
 function PromotedSlide({ products }) {
-    const displayProducts = products.slice(0, 3);
-
     return (
         <section className="mx-auto carousel-slide">
             <Row className="align-items-center">

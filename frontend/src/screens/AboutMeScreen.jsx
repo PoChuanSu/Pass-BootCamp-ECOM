@@ -7,7 +7,6 @@ const AboutMeScreen = () => {
         <section id="about-me-section" className="py-5 bg-white">
             <Container>
                 <Row className="align-items-center">
-                    {/* Left Side: Shop Introduction */}
                     <Col md={7} className="pe-md-5">
                         <h6
                             className="text-uppercase fw-bold mb-3"
@@ -41,7 +40,6 @@ const AboutMeScreen = () => {
                         </div>
                     </Col>
 
-                    {/* Right Side: SuShop Logo */}
                     <Col md={5} className="text-center mt-5 mt-md-0">
                         <div className="p-4 rounded-0">
                             <img
