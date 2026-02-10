@@ -6,7 +6,13 @@ import Loader from "../components/Loader";
 import { useGetMyOrdersQuery } from "../slices/ordersApiSlice";
 
 const MyOrderScreen = () => {
-    const { data: orders, isLoading, error } = useGetMyOrdersQuery();
+    const {
+        data: orders,
+        isLoading,
+        error,
+    } = useGetMyOrdersQuery(undefined, {
+        refetchOnMountOrArgChange: true,
+    });
 
     return (
         <Container className="py-5">

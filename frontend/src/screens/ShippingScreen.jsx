@@ -193,7 +193,7 @@ const ShippingScreen = () => {
                             cartItems={cart.cartItems}
                             userInfo={userInfo}
                             buttonText="Continue to Payment"
-                            onCheckout={() => navigate("/payment")}
+                            onCheckout={submitHandler}
                         />
                     </Col>
                 </Row>
