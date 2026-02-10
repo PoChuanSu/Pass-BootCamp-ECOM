@@ -92,7 +92,11 @@ const MyOrderScreen = () => {
                                                 className="text-success border border-success-subtle px-3 py-2 rounded-pill fw-normal"
                                             >
                                                 Paid{" "}
-                                                {order.paidAt.substring(5, 10)}
+                                                {order.paidAt
+                                                    .substring(5, 10)
+                                                    .split("-")
+                                                    .reverse()
+                                                    .join("/")}
                                             </Badge>
                                         ) : (
                                             <Badge
