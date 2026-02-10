@@ -168,10 +168,13 @@ const ProfileScreen = () => {
                                                 #{order._id.substring(0, 8)}...
                                             </td>
                                             <td className="small">
-                                                {order.createdAt.substring(
-                                                    0,
-                                                    10,
-                                                )}
+                                                {new Date(
+                                                    order.createdAt,
+                                                ).toLocaleDateString("en-AU", {
+                                                    day: "2-digit",
+                                                    month: "short",
+                                                    year: "numeric",
+                                                })}
                                             </td>
                                             <td className="fw-bold">
                                                 ${order.totalPrice.toFixed(2)}
@@ -179,10 +182,11 @@ const ProfileScreen = () => {
                                             <td>
                                                 {order.isPaid ? (
                                                     <span className="badge bg-success-subtle text-success border border-success px-2 py-1">
-                                                        {order.paidAt.substring(
-                                                            0,
-                                                            10,
-                                                        )}
+                                                        {order.paidAt
+                                                            .substring(5, 10)
+                                                            .split("-")
+                                                            .reverse()
+                                                            .join("/")}
                                                     </span>
                                                 ) : (
                                                     <FaTimes className="text-danger" />
