@@ -26,16 +26,18 @@ function NewArrivalSlide({ products }) {
                         and prices you’ll love.
                     </p>
                     <div className="d-flex justify-content-center justify-content-lg-start">
-                        <Button
-                            size="lg"
-                            style={{
-                                backgroundColor: "#ffffffff",
-                                color: "#000000ff",
-                            }}
-                            className="my-5 px-4 fw-semibold border border-dark"
-                        >
-                            Shop New Arrivals →
-                        </Button>
+                        <Link to="/new/page/1">
+                            <Button
+                                size="lg"
+                                style={{
+                                    backgroundColor: "#ffffffff",
+                                    color: "#000000ff",
+                                }}
+                                className="my-5 px-4 fw-semibold border border-dark"
+                            >
+                                Shop New Arrivals →
+                            </Button>
+                        </Link>
                     </div>
                 </Col>
 

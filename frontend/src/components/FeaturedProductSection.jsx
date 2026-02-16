@@ -26,16 +26,18 @@ function PromotedSlide({ products }) {
                     </p>
 
                     <div className="d-flex justify-content-center justify-content-lg-start">
-                        <Button
-                            size="lg"
-                            style={{
-                                backgroundColor: "#ffffffff",
-                                color: "#000000ff",
-                            }}
-                            className="my-5 px-4 border border-dark"
-                        >
-                            Explore Collection →
-                        </Button>
+                        <Link to="/products/page/1">
+                            <Button
+                                size="lg"
+                                style={{
+                                    backgroundColor: "#ffffffff",
+                                    color: "#000000ff",
+                                }}
+                                className="my-5 px-4 border border-dark"
+                            >
+                                Explore Collection →
+                            </Button>
+                        </Link>
                     </div>
                 </Col>
 
@@ -43,17 +45,15 @@ function PromotedSlide({ products }) {
                     lg={8}
                     className="d-flex align-items-center justify-content-center"
                 >
-                    <Link to={`/product/}`}>
-                        <img
-                            src={appleCollections}
-                            alt="Apple collections"
-                            className="img-fluid"
-                            style={{
-                                maxHeight: "100%",
-                                objectFit: "contain",
-                            }}
-                        />
-                    </Link>
+                    <img
+                        src={appleCollections}
+                        alt="Apple collections"
+                        className="img-fluid"
+                        style={{
+                            maxHeight: "100%",
+                            objectFit: "contain",
+                        }}
+                    />
                 </Col>
             </Row>
         </section>

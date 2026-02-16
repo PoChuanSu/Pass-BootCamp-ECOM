@@ -31,16 +31,18 @@ function PromotedSlide({ products }) {
                         <CountdownTimer endDate="2026-03-01T23:59:59" />
                     </div>
                     <div className="d-flex justify-content-center justify-content-lg-start">
-                        <Button
-                            size="lg"
-                            style={{
-                                backgroundColor: "#ffffffff",
-                                color: "#000000ff",
-                            }}
-                            className="my-5 px-4 border border-dark"
-                        >
-                            Shop Sale →
-                        </Button>
+                        <Link to="/sale/page/1">
+                            <Button
+                                size="lg"
+                                style={{
+                                    backgroundColor: "#ffffffff",
+                                    color: "#000000ff",
+                                }}
+                                className="my-5 px-4 border border-dark"
+                            >
+                                Shop Sale →
+                            </Button>
+                        </Link>
                     </div>
                 </Col>
 
